@@ -6,7 +6,7 @@
 console.log('+main.js');
 
 function loginStatus(response) {
-    console.console.log(response);
+    console.log(response);
 }
 
  $(document).ready(function() {
