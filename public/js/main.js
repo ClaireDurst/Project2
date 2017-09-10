@@ -5,8 +5,13 @@
  *-------------------------------------->8------------------------------------*/
 console.log('+main.js');
 
-function loginStatus(response) {
-    console.log(response);
+function loginStatus(status) {
+    if (status.status == "connected") {
+        FB.api('/me', { fields: 'first_name,email' }, (response) => {
+            console.log('Hey ' + response.first_name + "! " + response.email);
+
+        });
+    }
 }
 
  $(document).ready(function() {
