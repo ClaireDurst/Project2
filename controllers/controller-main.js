@@ -24,8 +24,12 @@ app.use(express.static('public'));
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set("view engine", 'handlebars');
 
-app.use((req, resp) => {
-    resp.render('index');
+
+
+app.use((req, res) => {
+    console.log(req.method);
+    console.log(req.body);
+    res.render('index');
 });
 
 app.listen(PORT, function () {
