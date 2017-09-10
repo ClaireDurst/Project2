@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Prototype</title>
+	<link rel="stylesheet" href="bootstrap-grid.css">
+	<link rel="stylesheet" href="bootstrap-reboot.css">
+	<link rel="stylesheet" href="bootstrap.css">
+	<link rel.js	="stylesheet" href="font-awesome.css">
+	<link rel="stylesheet" href="jquery-ui.css">
+	<link rel="stylesheet" href="jquery-ui.structure.css">
+	<link rel="stylesheet" href="jquery-ui.theme.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	<a class="navbar-brand" href="#">Prototype</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain"
+	    aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+	<div class="collapse navbar-collapse" id="navbarmain">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">API Endpoints</a>
+				<div class="dropdown-menu" aria-labelledby="dropdown01">
+					<a class="dropdown-item" href="/burgers">List burgers</a>
+					<a class="dropdown-item" href="#" id="regurgitateBtn">Regurgitate Burgers</a>
+				</div>
+			</li>
+		</ul>
+		<form class="form-inline my-2 my-lg-0">
+			<input class="form-control mr-sm-2" id="nav_name" type="text" placeholder="Burger Name" aria-label="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="nav_add">Add</button>
+		</form>
+	</div>
+</nav>
+{{{body}}}
+<<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/bootstrap.js"></script>
+</body>
+</html>
