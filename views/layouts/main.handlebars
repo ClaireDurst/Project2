@@ -14,7 +14,6 @@
 
 <body>
     <script>
-        var LOGGED_IN = false;
          window.fbAsyncInit = function () {
                 FB.init({
                     appId: '103017880442508',
@@ -25,6 +24,7 @@
                 FB.AppEvents.logPageView();
 
                 FB.getLoginStatus((resp) => {
+                    console.log('Login status rtn')
                     if (resp.status !== 'connected') {
                         LOGGED_IN = false;
 
@@ -41,7 +41,6 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-        }
 
     </script>
     <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
