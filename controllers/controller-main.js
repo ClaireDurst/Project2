@@ -31,7 +31,6 @@ app.post("/test", (req, resp) => {
 
 
 app.post("/login", (req, resp) => {
-    console.log('In the login post');
     if (req.body.email && req.body.name) {
         ORM.loginUser(req.body.name, req.body.email, (data) => {
             resp.send(data);
