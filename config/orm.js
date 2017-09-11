@@ -26,7 +26,7 @@ var ORM = {
             if (data != null) {
                 return cb(true);
             } else {
-                cxs.User.create({ user_name: name, user_email: email}).then((data) => {
+                cxs.User.create({ user_name: name, user_email: email }).then((data) => {
                     return cb(data);
                 }).catch((err) => {
                     throw new Error(err);
