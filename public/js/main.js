@@ -7,7 +7,7 @@ console.log('+main.js');
 
 function logOutFB() {
     FB.logout();
-    $('#login_button').html('<a href="#" class="btn btn-outline-success" onClick="FB.login(function(response) { loginStatus(response); }, {scope: \'public_profile, email\'});">Login with Facebook</a>');
+    $('#login_button').html('<a href="#" class="btn btn-outline-success" onClick="FB.login(function(response) { loginStatus(response.status); }, {scope: \'public_profile, email\'});">Login with Facebook</a>');
 }
 function loginStatus(status) {
     console.log('loginStatus(' + status + ')');
