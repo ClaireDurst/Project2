@@ -18,7 +18,7 @@ function loginStatus(status) {
             console.log(response);
             $.post('/login', { name: response.first_name, email: response.email }, (data) => {
                 if (data) {
-                    $('#login_button').html('<a href-"#" class="btn btn-outline-success" onClick="FB.logout()">Log Out</a>');
+                    $('#login_button').html('<a href-"#" class="btn btn-outline-success" onClick="logOutFB();">Log Out</a>');
                 }
             });
         });
