@@ -30,7 +30,11 @@ app.get('/test', (req, resp) => {
     });
 });
 
-app.post("/login", (req, resp) => {
+app.get('/claire', (req, resp)) {
+    resp.render('claire');
+}
+
+app.post("login/", (req, resp) => {
     if (req.body.email && req.body.name) {
         ORM.loginUser("James", "jamlh@gmail.com", (data) => {
             resp.send(data);
