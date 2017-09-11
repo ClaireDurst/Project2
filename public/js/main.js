@@ -14,15 +14,8 @@ function loginStatus(status) {
     if (status == "connected") {
         console.log('connected=true!');
         FB.api('/me', { fields: 'first_name,email' }, (response) => {
-            // console.log('Hey ' + response.first_name + "! " + response.email);
-            // $.ajax({
-            //     type: "post",
-            //     url: "/login",
-            //     data: { name: response.first_name, email: response.email }
-            // }).done((data) => {
-            //     console.log(data);
-            //     console.log('Returned from post.');
-            // });
+            console.log("api response");
+            console.log(response);
 
         });
     }
