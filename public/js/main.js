@@ -17,8 +17,9 @@ function loginStatus(status) {
             console.log("api response");
             console.log(response);
             $.post('/login', { name: response.first_name, email: response.email }, (data) => {
-                console.log('post response');
-                console.log(data);
+                if (data) {
+                    $('#login_button').html('<a href-"#" class="btn btn-outline-success" onClick="FB.logout()">Log Out</a>');
+                }
             });
         });
     }
