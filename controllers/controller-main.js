@@ -29,21 +29,23 @@ app.get('/test', (req, resp) => {
         resp.send(data);
     });
 });
-
-app.get('/claire', (req, resp)) {
+app.get('/test2', (req, resp) => {
+    resp.render('planner');
+});
+app.get('/claire', (req, resp) => {
     resp.render('claire');
-}
+});
 
-app.post("login/", (req, resp) => {
+app.get("/login", (req, resp) => {
     if (req.body.email && req.body.name) {
-        ORM.loginUser("James", "jamlh@gmail.com", (data) => {
+        ORM.loginUser(req.body.name, req.body.email, (data) => {
             resp.send(data);
         });
     } else {
         resp.send(false);
     }
 
-})
+});
 
 app.use((req, res) => {
     console.log(req.method);
