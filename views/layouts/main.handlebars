@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
         crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Anton|Cedarville+Cursive|PT+Sans|Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style1.css">
+
     <title>Dynamic Planner (working title)</title>
 </head>
 
@@ -30,7 +34,7 @@
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="#">Action</a>
                         <a class="dropdown-item" href="#">Another action</a>
@@ -39,7 +43,7 @@
                 </li>
             </ul>
             <span class="mr-sm-0" id="login_button">
-                <a href="#" class="btn btn-outline-success" onClick="FB.login(function(response) { loginStatus(response); }, {scope: 'public_profile,email'});">Login</a>
+                <a href="#" class="btn btn-outline-success" onClick="FB.login(function(response) { loginStatus(response); }, {scope: 'public_profile,email'});">Login with Facebook</a>
             </span>
             {{!-- <form class="form-inline my-2 my-lg-0" id='logged_in_form hidden'>
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
