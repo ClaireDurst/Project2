@@ -3,5 +3,15 @@ p {
 }
 
 html {
-	background-color: orange;
+	color: orange;
+}
+
+body { 
+	background-image: url("https://1.bp.blogspot.com/-oaYDI8HaN2w/UqWdu_kRy1I/AAAAAAAAFp4/MIBhpjqJnSA/s1600/yellow-tiled-background-through-pixel-dream.jpg");
+    background-repeat: no-repeat;
+        background-size: 3000px 4000px;
+        padding-top: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
 }
