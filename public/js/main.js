@@ -9,7 +9,12 @@ function loginStatus(status) {
     if (status.status == "connected") {
         FB.api('/me', { fields: 'first_name,email' }, (response) => {
             console.log('Hey ' + response.first_name + "! " + response.email);
-
+            $.post('/post', { user: response.first_name, email: response.email }, (data) => {
+                if (data) {
+                    console.log(data);
+                    console.log('Verified user is in DB, all is well.');
+                }
+            });
         });
     }
 }
