@@ -10,39 +10,48 @@ function logOutFB() {
     $('#login_button').html('<a href="#" class="btn btn-outline-success" onClick="FB.login(function(response) { loginStatus(response); }, {scope: \'public_profile, email\'});">Login with Facebook</a>');
 }
 function loginStatus(status) {
-    if (status.status == "connected") {
+    console.log('loginStatus(' + status + ')');
+    if (status == "connected") {
+        console.log('connected=true!');
         FB.api('/me', { fields: 'first_name,email' }, (response) => {
-            console.log('Hey ' + response.first_name + "! " + response.email);
-            $.post('/login', { user: response.first_name, email: response.email }, (data) => {
-                if (data) {
-                    $('#login_button').html('<a href="#" class="btn btn-outline-success" onClick="logOutFB()">Log Out</a>');
-                }
-            });
+            // console.log('Hey ' + response.first_name + "! " + response.email);
+            // $.ajax({
+            //     type: "post",
+            //     url: "/login",
+            //     data: { name: response.first_name, email: response.email }
+            // }).done((data) => {
+            //     console.log(data);
+            //     console.log('Returned from post.');
+            // });
+
         });
     }
 }
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[ 0 ];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
  $(document).ready(function() {
+     console.log("document->rdy!");
      window.fbAsyncInit = function () {
-         FB.init({
-             appId: '103017880442508',
-             cookie: true,
-             xfbml: true,
-             version: 'v2.10'
-         });
-         FB.AppEvents.logPageView();
-         FB.getLoginStatus((resp) => {
-            loginStatus(resp);
-         });
-     };
-
-     (function (d, s, id) {
-         var js, fjs = d.getElementsByTagName(s)[ 0 ];
-         if (d.getElementById(id)) { return; }
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
+        console.log('fbasyncinit...');
+        FB.init({
+            appId: '103017880442508',
+            cookie: true,
+            xfbml: true,
+            version: 'v2.10'
+        });
+        FB.AppEvents.logPageView();
+        FB.getLoginStatus((resp) => {
+            console.log('getLoginStatus Response');
+            console.log(resp);
+            loginStatus(resp.status);
+        });
+    };
 
 
  });

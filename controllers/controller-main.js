@@ -24,9 +24,14 @@ app.use(express.static('public'));
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set("view engine", 'handlebars');
 
+app.post("/test", (req, resp) => {
+    console.log(req.body.name + " : " + req.body.emai)
+    resp.send(JSON.stringify(req.body));
+});
+
 
 app.post("/login", (req, resp) => {
-    console.log('In the login post')
+    console.log('In the login post');
     if (req.body.email && req.body.name) {
         ORM.loginUser(req.body.name, req.body.email, (data) => {
             resp.send(data);
