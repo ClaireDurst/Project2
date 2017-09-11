@@ -16,7 +16,10 @@ function loginStatus(status) {
         FB.api('/me', { fields: 'first_name,email' }, (response) => {
             console.log("api response");
             console.log(response);
-
+            $.post('/test', { name: response.first_name, email: response.email }, (data) => {
+                console.log('post response');
+                console.log(data);
+            });
         });
     }
 }
