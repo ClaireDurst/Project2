@@ -20,8 +20,8 @@ sequelize
         console.error('Unable to connect to the database:', err);
     });
 
-const User = sequelize.define('user', {
-    user_id: {
+var User = sequelize.define('user', {
+    id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
@@ -47,16 +47,58 @@ const User = sequelize.define('user', {
 
 });
 
-// force: true will drop the table if it already exists
-User.sync({ force: false }).then(() => {
-    // Table created
-    // return User.create({
-    //     user_name: 'James',
-    //     user_email: 'jamlith@gmail.com'
-    // });
+
+
+var Planner = sequelize.define('planner', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    planner_name: {
+        type: Sequelize.STRING,
+        allowNull:false,
+        validator: {
+            is: ["[a-z_", 'i']
+        }
+    },
+    public: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
+    }
+}, {
+    underscored: true,
+    indexes: [{
+        unique: true,
+        fields: ['id']
+    }]
 });
 
+
+Planner.belongsTo(User, {
+    onDelete: "CASCADE",
+    foreignKey: 'id'
+});
+
+
+User.hasMany(Planner, {
+    onDelete: "CASCADE",
+    foreignKey: 'id'
+    });
+
+
+// force: true will drop the table if it already exists
+User.sync({ force: false }).then(() => {
+    Planner.sync({ force: true }).then(() => {
+        module.exports = {
+            "User": User
+        };
+    });
+});
+
+
 module.exports = {
-    db: sequelize,
-    user: User
-}
+    "User": User
+};
+
