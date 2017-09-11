@@ -6,5 +6,3 @@
 
 var path = require('path')
   , controller = require(path.join(__dirname, '/controllers/controller-main.js'));
-
-

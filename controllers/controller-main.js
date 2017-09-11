@@ -24,19 +24,9 @@ app.use(express.static('public'));
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set("view engine", 'handlebars');
 
-app.get('/test', (req, resp) => {
-    ORM.allUsers((data) => {
-        resp.send(data);
-    });
-});
-app.get('/test2', (req, resp) => {
-    resp.render('planner');
-});
-app.get('/claire', (req, resp) => {
-    resp.render('claire');
-});
 
-app.get("/login", (req, resp) => {
+app.post("/login", (req, resp) => {
+    console.log('In the login post')
     if (req.body.email && req.body.name) {
         ORM.loginUser(req.body.name, req.body.email, (data) => {
             resp.send(data);
