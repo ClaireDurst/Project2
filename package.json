@@ -19,12 +19,12 @@
   },
   "homepage": "https://github.com/ClaireDurst/Project2#readme",
   "dependencies": {
-    "body-parser": "^1.18.0",
+    "body-parser": "^1.18.1",
     "express": "^4.15.4",
     "express-handlebars": "^3.0.0",
     "mysql": "^2.14.1",
     "mysql2": "^1.4.2",
-    "sequelize": "^4.8.2"
+    "sequelize": "^4.8.3"
   },
   "devDependencies": {
     "nodemon": "^1.12.0"
