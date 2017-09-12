@@ -49,20 +49,24 @@ var User = sequelize.define('user', {
 
 
 
-var Planner = sequelize.define('planner', {
-    id: {
+var Event = sequelize.define('event', {
+    event_id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    planner_name: {
+    event_name: {
         type: Sequelize.STRING,
         allowNull:false,
         validator: {
             is: ["[a-z_", 'i']
         }
     },
-    public: {
+    deadline: {
+        type: Sequelize.DATEONLY,
+        allowNull: true
+    },
+    is_finished: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: 0
@@ -71,26 +75,21 @@ var Planner = sequelize.define('planner', {
     underscored: true,
     indexes: [{
         unique: true,
-        fields: ['id']
+        fields: ['event_id']
     }]
 });
 
 
-Planner.belongsTo(User, {
-    onDelete: "CASCADE",
-    foreignKey: 'id'
+
+User.hasMany(Event, {
+    onDelete: "CASCADE"
 });
 
-
-User.hasMany(Planner, {
-    onDelete: "CASCADE",
-    foreignKey: 'id'
-    });
 
 
 // force: true will drop the table if it already exists
 User.sync({ force: false }).then(() => {
-    Planner.sync({ force: true }).then(() => {
+    Event.sync({ force: false }).then(() => {
         module.exports = {
             "User": User
         };
@@ -100,5 +99,6 @@ User.sync({ force: false }).then(() => {
 
 module.exports = {
     "User": User
-};
+}
+
 
