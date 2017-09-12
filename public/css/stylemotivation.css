@@ -1,0 +1,28 @@
+p {
+	font-family: 'Cedarville Cursive', cursive;
+}
+
+html {
+	color: orange;
+}
+
+body { 
+	background-image: url("http://3.bp.blogspot.com/-05Z-np4NrmY/T-t2LKi4m8I/AAAAAAAACC4/E4Yhz9QsyIA/s1600/seamless_green_background_for_web_sites.jpg");
+    background-repeat: no-repeat;
+        background-size: 2000px 2000px;
+        padding-top: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+}
+
+.jumbotron {
+		background-image: url("https://i0.wp.com/www.colourbox.com/preview/3119999-abstract-light-blue-hand-drawn-pattern-waves-background-seamless-pattern-can-be-used-for-wallpaper-pattern-fills-web-page-background-surface-textures.jpg?resize=525%2C525&ssl=1");
+		background-repeat: no-repeat;
+		background-size: 50000px
+
+}
+
+.link{
+	color: black;
+}
