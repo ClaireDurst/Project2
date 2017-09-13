@@ -8,17 +8,12 @@ const sequelize = new Sequelize('hr0vdec8yom4q8ik', 'givj98e77xcypqaw', 'pba0j70
         max: 5,
         min: 0,
         idle: 10000
+    },
+    define: {
+        underscored: true
     }
 });
 
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
 
 var User = sequelize.define('user', {
     id: {
@@ -41,14 +36,6 @@ var User = sequelize.define('user', {
             isEmail: true
         }
     }
-
-}, {
-    underscored: true,
-    indexes: [{
-    unique: true,
-    fields: [ 'user_email' ]
-    }]
-
 });
 
 
@@ -67,7 +54,7 @@ var Event = sequelize.define('event', {
         }
     },
     event_collaborators: {
-        type: Sequelize.ARRAY,
+        type: Sequelize.JSON,
         allowNull: true,
         defaultValue: null
     },
@@ -81,12 +68,6 @@ var Event = sequelize.define('event', {
         allowNull: false,
         defaultValue: 0
     }
-}, {
-    underscored: true,
-    indexes: [{
-        unique: true,
-        fields: ['event_id']
-    }]
 });
 
 
@@ -96,19 +77,22 @@ User.hasMany(Event, {
 });
 
 
-
 // force: true will drop the table if it already exists
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+
 User.sync({ force: false }).then(() => {
     Event.sync({ force: false }).then(() => {
         module.exports = {
-            "User": User
+            "User": User,
+            "Event": Event
         };
     });
 });
+});
 
 
-module.exports = {
-    "User": User
-}
 
 

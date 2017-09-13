@@ -16,13 +16,23 @@ var UserData = {
     user_email: undefined,
     isNew: undefined
 };
+
+// functions
+
 function logIn() {
     // prompt user for fb login, then update login status
     FB.login(function (status) {
         loginStatus(status);
-    }
-    , { scope: 'public_profile,email' });
+    }v, { scope: 'public_profile,email' });
 
+}
+function loggedIn() {
+    $('#nav_logIn').hide();
+    $('#nav_logOut').show();
+}
+function loggedInTest() {
+    // switch the Log In button for a Log Out button
+    $('#nav_logIn').fadeOut().then($('#nav_logOut').fadeIn());
 }
 function logOut() {
     // send FB API the logout signal, then run loggedOut()
@@ -43,10 +53,6 @@ function loggedOut() {
     UserData.user_fullName = undefined;
     UserData.user_email = undefined;
     userData.user_isNew = undefined;
-}
-function loggedIn() {
-    // switch the Log In button for a Log Out button
-    $('#nav_logIn').fadeOut().then($('#nav_logOut').fadeIn());
 }
 function loginStatus(status) {
     // the function called when FB.login completes;  Runs an API call to FB to
@@ -83,6 +89,17 @@ function loginStatus(status) {
         });
     }
 }
+function init() {
+    $('#nav_logOut').hide();
+    $('#nav_logIn').click((event) => {
+        logIn();
+    });
+    $('#nav_logOut').click((event) => {
+        logOut();
+    });
+}
+
+// Facebook API load/init
 (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[ 0 ];
     if (d.getElementById(id)) { return; }
@@ -91,13 +108,12 @@ function loginStatus(status) {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
- $(document).ready(function() {
+// Wait for DOM, then run the code
+$(document).ready(function() {
     console.log("DOM loaded!");
-
     init();
 
     window.fbAsyncInit = function () {
-    console.log('fbasyncinit...');
         FB.init({
             appId: '103017880442508',
             cookie: true,

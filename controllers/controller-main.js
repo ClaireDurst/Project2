@@ -44,7 +44,7 @@ app.use((req, res) => {
     }
     res.render('index', {
         helpers: {
-            
+
         }
     });
 });
