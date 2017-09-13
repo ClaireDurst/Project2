@@ -1,10 +1,15 @@
 <div class="form-group">
-    <label for="InputEventname">Event name:</label>
-    <input type="email" class="form-control" id="InputEventname" aria-describedby="EventnameHelp" placeholder="Event Name">
-    <small id="EventnameHelp" class="form-text text-muted">Bullshit here</small>
+    <label for="InputEventname">Task name:</label>
+    <input type="text" class="form-control" id="InputEventname" aria-describedby="EventnameHelp" placeholder="Event Name">
+    <small id="EventnameHelp" class="form-text text-muted">A short handle that will title your goal.</small>
 </div>
 <div class="form-group">
-    <label for="InputEventname">Event name:</label>
-    <input type="email" class="form-control" id="InputEventname" aria-describedby="EventnameHelp" placeholder="Event Name">
-    <small id="EventnameHelp" class="form-text text-muted">Bullshit here</small>
+    <label for="InputEventDesc">Description:</label>
+    <textarea class="form-control" id="InputEventDesc" aria-describedby="EventDescHelp" placeholder="A brief description...">
+    <small id="EventDescHelp" class="form-text text-muted">A quick explaination of the task at hand.</small>
+</div>
+<div class="form-group">
+    <label for="InputEventDate">Target date:</label>
+    <input type="date" class="form-control" id="InputEventDate" aria-describedby="EventDateHelp" default='{{today}}'>
+    <small id="EventDateHelp" class="form-text text-muted">A date you hope to complete the task by.</small>
 </div>

@@ -58,16 +58,23 @@ var ORM = {
     },
     getUserEvents: function(owner_id, cb) {
         // return all events owned by a user ID
-        cxs.Event.findAll({ where: { user_id: owner_id } })
+        cxs.dbEvent.findAll({ where: { user_id: owner_id } })
             .then((data) => {
                 return cb(data);
             }).catch((err) =>{
                 throw new Error(err);
             });
     },
+    getEventsByDeadline: function(owner_id, deadline) {
+        cxs.dbEvent.findAll({ where: { user_id: owner_id, event_deadline: deadline }}).then((data) => {
+            return cb(data);
+        }).catch((err) => {
+            throw new Error(err);
+        });
+    },
     createEvent: function(owner_id, name, deadline, description, cb) {
         // create a new event, return the row
-        cxs.Event.create({ event_name: name, event_deadline: deadline, user_id: owner_id, event_is_complete: 0 }).then((data) => {
+        cxs.dbEvent.create({ event_name: name, event_deadline: deadline, user_id: owner_id, event_is_complete: 0 }).then((data) => {
             return cb(data);
         }).catch((err) => {
             throw new Error(err);

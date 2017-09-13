@@ -55,7 +55,12 @@ app.get("/test", (req, resp) => {
 
 app.get("/form/createEvent", (req, resp) =>{
     resp.render('form_createEvent', {
-        layout: "empty"
+        layout: "empty",
+        helpers: {
+            today: function() {
+                return Date.now();
+            }
+        }
     });
 });
 

@@ -73,6 +73,12 @@ function logIn() {
 
 }
 
+function replaceJumbotron(endpoint) {
+    $.get(endpoint, (html) => {
+        $('#jt_container').html(html);
+    });
+}
+
 function logOut() {
     // send FB API the logout signal, then run loggedOut()
     FB.logout();
@@ -85,6 +91,9 @@ function init() {
     });
     $('#nav_logOut').click((event) => {
         logOut();
+    });
+    $('#nav_newEvent').click((event) => {
+        replaceJumbotron('forms/createEvent', )
     });
     $('#dropdown01').addClass('disabled');
 }
@@ -179,6 +188,7 @@ $(document).ready(function() {
         });
         FB.AppEvents.logPageView();
         // query FB for current login status
+        console.log('about to getLoginStatus');
             FB.getLoginStatus((resp) => {
                 console.log('FB login status response');
                 // update login status
