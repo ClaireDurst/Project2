@@ -50,12 +50,12 @@ var ORM = {
         cxs.User.findOne({ where: { user_email: email }}).then((data) => {
             if (data != null) {
                 // User exists, return [ isNewUser=false, {user_data} ]
-                return cb([ false, data ]);
+                return cb( false, data );
             } else {
                 // Email doesn't exist in DB, creating new user
                 cxs.User.create({ user_firstName: firstName, user_lastName: lastName, user_email: email }).then((data) => {
                     // return [ isNewUser=true, {user_data} ]
-                    return cb([ true, data ]);
+                    return cb( true, data );
                 }).catch((err) => {
                     throw new Error(err);
                 });
@@ -71,7 +71,7 @@ var ORM = {
                 throw new Error(err);
             });
     },
-    createEvent: function(owner_id, name, deadline=null, cb) {
+    createEvent: function(owner_id, name, deadline, cb) {
         // create a new event, return the row
         cxs.Event.create({ event_name: name, event_deadline: deadline, user_id: owner_id, event_is_complete: 0 }).then((data) => {
             return cb(data);

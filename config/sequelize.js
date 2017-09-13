@@ -10,6 +10,7 @@ const sequelize = new Sequelize('hr0vdec8yom4q8ik', 'givj98e77xcypqaw', 'pba0j70
         idle: 10000
     },
     define: {
+        // yeah
         underscored: true
     }
 });

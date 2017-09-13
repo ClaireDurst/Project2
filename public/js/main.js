@@ -23,16 +23,12 @@ function logIn() {
     // prompt user for fb login, then update login status
     FB.login(function (status) {
         loginStatus(status);
-    }v, { scope: 'public_profile,email' });
+    }, { scope: 'public_profile,email' });
 
 }
 function loggedIn() {
     $('#nav_logIn').hide();
     $('#nav_logOut').show();
-}
-function loggedInTest() {
-    // switch the Log In button for a Log Out button
-    $('#nav_logIn').fadeOut().then($('#nav_logOut').fadeIn());
 }
 function logOut() {
     // send FB API the logout signal, then run loggedOut()

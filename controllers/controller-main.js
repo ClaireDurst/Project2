@@ -44,11 +44,13 @@ app.use((req, res) => {
     }
     res.render('index', {
         helpers: {
-
+            port: function() {
+                return PORT;
+            }
         }
     });
 });
 
 app.listen(PORT, function () {
-    console.log("Server is listening on port " + PORT)
+    console.log("Server is listening on port " + PORT);
 });
