@@ -93,7 +93,7 @@ function init() {
         logOut();
     });
     $('#nav_newEvent').click((event) => {
-        replaceJumbotron('forms/createEvent', )
+        replaceJumbotron('forms/createEvent');
     });
     $('#dropdown01').addClass('disabled');
 }
