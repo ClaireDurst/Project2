@@ -91,8 +91,8 @@ function init() {
 function loggedIn() {
     $('#nav_logIn').hide();
     $('#nav_logOut').show();
-    var profile_pic = $('<img id=nav_profilePic>').attr(src, UserData.user_picture);
-    profile_pic.load($('#jt_container').prepend('#logIn_logOut'));
+    var i = $('<img src=' + UserData.user_picture + '>');
+    i.prependTo($("#logIn_logOut"));
     console.log(UserData);
 }
 function loggedOut() {
