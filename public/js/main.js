@@ -91,8 +91,8 @@ function init() {
 function loggedIn() {
     $('#nav_logIn').hide();
     $('#nav_logOut').show();
-    var profile_pic = $('<img>').attr(src, UserData.user_picture);
-    profile_pic.load($('#jt_container').append(profile_pic));
+    var profile_pic = $('<img id=nav_profilePic>').attr(src, UserData.user_picture);
+    profile_pic.load($('#jt_container').prepend('#logIn_logOut'));
     console.log(UserData);
 }
 function loggedOut() {
@@ -126,7 +126,7 @@ function loginStatus(status) {
             UserData.user_firstName = response.first_name;
             UserData.user_lastName = response.last_name;
             UserData.user_email = response.email;
-            UserData.user_picture = response.picture;
+            UserData.user_picture = response.picture.data.url;
             UserData.user_fullName = response.first_name + " " + response.last_name;
             $.post('/login', { email: UserData.user_email + "" }, (data) => {
                 if (data) {
