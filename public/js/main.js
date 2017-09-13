@@ -67,9 +67,9 @@ function logIn() {
         });
     } else {
         console.log('Production Server detected, Using Facebook API!');
-        FB.login(function (status) {
-            loginStatus(status);
-        }, { scope: 'public_profile,email' });
+        FB.login(function (resp) {
+            loginStatus(resp.status);
+        }, { scope: 'public_profile,email,picture' });
     }
 
 }
@@ -167,6 +167,7 @@ $(document).ready(function() {
     init();
 
     window.fbAsyncInit = function () {
+        console.log('FB async init');
         FB.init({
             appId: '103017880442508',
             cookie: true,
@@ -175,12 +176,11 @@ $(document).ready(function() {
         });
         FB.AppEvents.logPageView();
         // query FB for current login status
-        if (document.URL.indexOf("localhost") != -1) {
             FB.getLoginStatus((resp) => {
+                console.log('FB login status response');
                 // update login status
                 loginStatus(resp.status);
             });
-        }
     };
 
  });
