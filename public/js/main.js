@@ -3,22 +3,81 @@
  *      main.js - the js code to be loaded on every page.
  *
  *-------------------------------------->8------------------------------------*/
-console.log('+main.js');
+console.log('=====================================(main)=====================================');
 
-function logOutFB() {
+// init UserData object
+var UserData = {
+    isLoggedIn: false,
+    fb_state: undefined,
+    user_id: undefined,
+    user_firstName: undefined,
+    user_lastName: undefined,
+    user_fullName: undefined,
+    user_email: undefined,
+    isNew: undefined
+};
+function logIn() {
+    // prompt user for fb login, then update login status
+    FB.login(function (status) {
+        loginStatus(status);
+    }
+    , { scope: 'public_profile,email' });
+
+}
+function logOut() {
+    // send FB API the logout signal, then run loggedOut()
     FB.logout();
-    $('#login_button').html('<a href="#" class="btn btn-outline-success" onClick="FB.login(function(response) { loginStatus(response.status); }, {scope: \'public_profile, email\'});">Login with Facebook</a>');
+    loggedOut();
+}
+function loggedOut() {
+    // switch the log out button for a log in button
+    $('#nav_logOut').hide();
+    $('#nav_logIn').show();
+
+    // reset UserData
+    UserData.isLoggedIn = false;
+    UserData.fb_state = null;
+    UserData.user_id = undefined;
+    UserData.user_firstName = undefined;
+    UserData.user_lastName = undefined;
+    UserData.user_fullName = undefined;
+    UserData.user_email = undefined;
+    userData.user_isNew = undefined;
+}
+function loggedIn() {
+    // switch the Log In button for a Log Out button
+    $('#nav_logIn').fadeOut().then($('#nav_logOut').fadeIn());
 }
 function loginStatus(status) {
-    console.log('loginStatus(' + status + ')');
+    // the function called when FB.login completes;  Runs an API call to FB to
+    // get user's info, then checks database for existing user
+    console.log('FB logins status: (' + status + ')');
+    UserData.fb_state = status;
     if (status == "connected") {
-        console.log('connected=true!');
-        FB.api('/me', { fields: 'first_name,email' }, (response) => {
-            console.log("api response");
-            console.log(response);
-            $.post('/login', { name: response.first_name, email: response.email }, (data) => {
-                if (data) {
-                    $('#login_button').html('<a href-"#" class="btn btn-outline-success" onClick="logOutFB();">Log Out</a>');
+        // Connected to FB, query API
+        console.log("FB logged in TRUE, querying FB API for user's name/email...");
+        FB.api('/me', { fields: 'first_name,last_name,email' }, (response) => {
+            // API response recieved, use returned info to set UserData & check for/create user in the DB
+            console.log("API Response recieved.... " + response.first_name + " " + response.last_name + " -> " + response.email + "; return/create user's database entry.");
+            UserData.isLoggedIn = true;
+            UserData.user_firstName = response.first_name;
+            UserData.user_lastName = response.last_name;
+            UserData.user_email = response.email;
+            UserData.user_fullName = response.first_name + " " + response.last_name;
+            $.post('/login', { firstName: response.first_name, lastName: response.last_name, email: response.email }, (data) => {
+                // database response recieved... should be [ $isNewUser, ${userData} ]
+                if (data.length == 2) {
+                    // seems to be the correct response format, set UserData and run the loggedIn() function
+                    UserData.isNew = data[0];
+                    UserData.user_id = data[1].id;
+                    loggedIn();
+                } else {
+                    // returned data wasn't in the expected formet
+                    alert("ERROR!  Login failed!  Check log for details.");
+                    console.log('FAILED TO RETRIEVE API QUERY FOR USER INFO!  LOGGED OUT AUTOMATICALLY!');
+                    console.log('Details:');
+                    console.log('RESPONSE => ' + response);
+                    logOut();
                 }
             });
         });
@@ -33,9 +92,12 @@ function loginStatus(status) {
 }(document, 'script', 'facebook-jssdk'));
 
  $(document).ready(function() {
-     console.log("document->rdy!");
-     window.fbAsyncInit = function () {
-        console.log('fbasyncinit...');
+    console.log("DOM loaded!");
+
+    init();
+
+    window.fbAsyncInit = function () {
+    console.log('fbasyncinit...');
         FB.init({
             appId: '103017880442508',
             cookie: true,
@@ -43,12 +105,11 @@ function loginStatus(status) {
             version: 'v2.10'
         });
         FB.AppEvents.logPageView();
+        // query FB for current login status
         FB.getLoginStatus((resp) => {
-            console.log('getLoginStatus Response');
-            console.log(resp);
+            // update login status
             loginStatus(resp.status);
         });
     };
-
 
  });

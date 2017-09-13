@@ -26,9 +26,13 @@ var User = sequelize.define('user', {
         autoIncrement: true,
         primaryKey: true
     },
-    user_name: {
+    user_firstName: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    user_lastName: {
+        type: Sequelize.STRING,
+        allowNull:false
     },
     user_email: {
         type: Sequelize.STRING,
@@ -62,11 +66,17 @@ var Event = sequelize.define('event', {
             is: ["[a-z_", 'i']
         }
     },
-    deadline: {
-        type: Sequelize.DATEONLY,
-        allowNull: true
+    event_collaborators: {
+        type: Sequelize.ARRAY,
+        allowNull: true,
+        defaultValue: null
     },
-    is_finished: {
+    event_deadline: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        defaultValue: null
+    },
+    event_is_complete: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: 0

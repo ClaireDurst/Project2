@@ -16,6 +16,7 @@ console.log('+ controller-main.js');
 
 var app = express();
 
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.text());
@@ -24,15 +25,10 @@ app.use(express.static('public'));
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set("view engine", 'handlebars');
 
-app.post("/test", (req, resp) => {
-    console.log(req.body.name + " : " + req.body.emai)
-    resp.send(JSON.stringify(req.body));
-});
-
-
 app.post("/login", (req, resp) => {
-    if (req.body.email && req.body.name) {
-        ORM.loginUser(req.body.name, req.body.email, (data) => {
+    // check for existing user, create one if necessary... respond with the returned data.
+    if (req.body.email && req.body.firstName && req.body.lastName) {
+        ORM.checkUser(req.body.firstName, req.body.lastName, req.body.email, (data) => {
             resp.send(data);
         });
     } else {
@@ -43,8 +39,14 @@ app.post("/login", (req, resp) => {
 
 app.use((req, res) => {
     console.log(req.method);
-    console.log(req.body);
-    res.render('index');
+    if (toString(req.body) !== "{}") {
+        console.log(req.body);
+    }
+    res.render('index', {
+        helpers: {
+            
+        }
+    });
 });
 
 app.listen(PORT, function () {

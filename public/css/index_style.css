@@ -1,0 +1,18 @@
+/*
+ *  (Dynamic Planner):
+ *      index_style.css - the stylesheet to be referenced by the index.handlebars
+ *          render sequence, and will persist throughout any view changes then
+ *          made through the DOM (Most of the content the user will see.)
+ *      Since this view is so all-encompassing, please use classnames that won't
+ *          be used by coincedence in elements you don't intend to style (just
+ *          be specific and unambiguous when creating new class names.)  Also,
+ *          please dont use ID's unless they have alrady been defined, as I will
+ *          require those to be named in convention to the backend code.
+ *              Thanks,
+ *                  James, aka
+ *                  Your fav. backend master, aka
+ *                  Your fav. front-end guru, aka
+ *                  Gods gift to javascript
+ *
+ *-------------------------------------->8------------------------------------*/
+

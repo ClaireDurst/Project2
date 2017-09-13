@@ -10,7 +10,7 @@
         crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Anton|Cedarville+Cursive|PT+Sans|Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/global_style.css">
         <link rel="stylesheet" href="css/style1.css">
 
     <title>Dynamic Planner (working title)</title>
@@ -42,8 +42,9 @@
                     </div>
                 </li>
             </ul>
-            <span class="mr-sm-0" id="login_button">
-                <a href="#" class="btn btn-outline-success" onClick="FB.login(function(response) { loginStatus(response); }, {scope: 'public_profile,email'});">Login with Facebook</a>
+            <span class="mr-sm-0" id="logIn_logOut">
+                <a href="#" class="btn btn-outline-success" id="nav_logIn">Login with Facebook</a>
+                <a href="#" class="btn btn-outline-success" id="nav_logOut">Log Out</a>
             </span>
             {{!-- <form class="form-inline my-2 my-lg-0" id='logged_in_form hidden'>
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -59,6 +60,7 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
         crossorigin="anonymous"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="/js/main.js"></script>
 </body>
 
