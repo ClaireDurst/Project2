@@ -28,13 +28,17 @@ app.set("view engine", 'handlebars');
 app.post("/login", (req, resp) => {
     // check for existing user, create one if necessary... respond with the returned data.
     if (req.body.email && req.body.firstName && req.body.lastName) {
-        ORM.checkUser(req.body.firstName, req.body.lastName, req.body.email, (data) => {
-            resp.send(data);
+        ORM.checkUser(req.body.firstName, req.body.lastName, req.body.email, (isNew, data) => {
+            resp.json({ user_isNew: isNew, UserData: data});
         });
     } else {
         resp.send(false);
     }
 
+});
+
+app.get("/test", (req, resp) => {
+    ORM.checkUser('James', 'Litherland', 'jamlith@gmail.com', ())
 });
 
 app.use((req, res) => {

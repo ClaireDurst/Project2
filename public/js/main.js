@@ -66,12 +66,12 @@ function loginStatus(status) {
             UserData.user_lastName = response.last_name;
             UserData.user_email = response.email;
             UserData.user_fullName = response.first_name + " " + response.last_name;
-            $.post('/login', { firstName: response.first_name, lastName: response.last_name, email: response.email }, (data) => {
+            $.post('/login', { firstName: response.first_name, lastName: response.last_name, email: response.email }, (isNew, data) => {
                 // database response recieved... should be [ $isNewUser, ${userData} ]
-                if (data.length == 2) {
+                if () {
                     // seems to be the correct response format, set UserData and run the loggedIn() function
-                    UserData.isNew = data[0];
-                    UserData.user_id = data[1].id;
+                    UserData.user_isNew = isNew;
+                    UserData.user_id = data.id;
                     loggedIn();
                 } else {
                     // returned data wasn't in the expected formet
