@@ -60,7 +60,7 @@ function logIn() {
                     UserData.isNew = true;
                     UserData.user_id = x.id;
                     loggedIn();
-                })
+                });
             }
         });
     } else {
@@ -113,8 +113,21 @@ function loginStatus(status) {
             UserData.user_lastName = response.last_name;
             UserData.user_email = response.email;
             UserData.user_fullName = response.first_name + " " + response.last_name;
-            $.post('/login', { firstName: response.first_name, lastName: response.last_name, email: response.email }, (data) => {
-
+            $.post('/login', { email: UserData.user_email + "" }, (data) => {
+                console.log(data);
+                if (data) {
+                    var x = JSON.parse(data);
+                    UserData.isNew = false;
+                    UserData.user_id = x.id;
+                    loggedIn();
+                } else {
+                    $.post('/create', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
+                        var x = JSON.parse(data);
+                        UserData.isNew = true;
+                        UserData.user_id = x.id;
+                        loggedIn();
+                    });
+                }
             });
         });
     }
