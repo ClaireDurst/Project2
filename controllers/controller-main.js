@@ -53,6 +53,12 @@ app.get("/test", (req, resp) => {
     });
 });
 
+app.get("/form/createEvent", (req, resp) =>{
+    resp.render('form_createEvent', {
+        layout: "empty"
+    });
+});
+
 app.use((req, res) => {
     res.render('index', {
         helpers: {

@@ -54,6 +54,11 @@ var dbEvent = sequelize.define('event', {
             is: ["[a-z_", 'i']
         }
     },
+    event_description: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        defaultValue: "Nondescript"
+    },
     event_collaborators: {
         type: Sequelize.JSON,
         allowNull: true,

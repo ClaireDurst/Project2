@@ -5,7 +5,7 @@
  *-------------------------------------->8------------------------------------*/
 
  // cxs.User (`Users` = id, user_firstName!, user_lastName!, user_email!)
- // cxs.Event (`Events` = event_id
+ // cxs.dbEvent (`dbEvents` = event_id,
 
  var path = require('path')
    , cxs = require('./sequelize.js');
@@ -65,7 +65,7 @@ var ORM = {
                 throw new Error(err);
             });
     },
-    createEvent: function(owner_id, name, deadline, cb) {
+    createEvent: function(owner_id, name, deadline, description, cb) {
         // create a new event, return the row
         cxs.Event.create({ event_name: name, event_deadline: deadline, user_id: owner_id, event_is_complete: 0 }).then((data) => {
             return cb(data);
