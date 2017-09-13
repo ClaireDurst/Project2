@@ -11,15 +11,6 @@
    , cxs = require('./sequelize.js');
 
 var ORM = {
-    createUser: function (first_name, last_name, email, cb) {
-        // create new user
-        cxs.User.create({ user_firstName: first-name, user_lastName: last_name, user_email: email })
-            .then((data) => {
-                return cb(data);
-            }).catch((err) => {
-                throw new Error(err);
-            });
-    },
     allUsers: function (cb) {
         // return all users
         cxs.User.findAll()
@@ -45,21 +36,24 @@ var ORM = {
             throw new Error(err);
         });
     },
-    checkUser: function (firstName, lastName, email, cb) {
+    checkUser: function (email, cb) {
         // if user exists return info, otherwise create one and return its info
         cxs.User.findOne({ where: { user_email: email }}).then((data) => {
             if (data != null) {
-                // User exists, return [ isNewUser=false, {user_data} ]
-                return cb( false, data );
+                var x = JSON.stringify(data);
+                return cb(x);
             } else {
-                // Email doesn't exist in DB, creating new user
-                cxs.User.create({ user_firstName: firstName, user_lastName: lastName, user_email: email }).then((data) => {
-                    // return [ isNewUser=true, {user_data} ]
-                    return cb( true, data );
-                }).catch((err) => {
-                    throw new Error(err);
-                });
+                return cb(false);
             }
+        }).catch((err) => {
+            throw new Error(err);
+        });
+    },
+    createUser: function (first_name, last_name, email, cb) {
+        cxs.User.create({ user_firstName: first_name, user_lastName: last_name, user_email: email }).then((data) => {
+            return cb(data);
+        }).catch((err) => {
+            throw new Error(err);
         });
     },
     getUserEvents: function(owner_id, cb) {

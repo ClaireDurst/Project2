@@ -41,7 +41,7 @@ var User = sequelize.define('user', {
 
 
 
-var Event = sequelize.define('event', {
+var dbEvent = sequelize.define('event', {
     event_id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -73,7 +73,7 @@ var Event = sequelize.define('event', {
 
 
 
-User.hasMany(Event, {
+User.hasMany(dbEvent, {
     onDelete: "CASCADE"
 });
 
@@ -84,16 +84,14 @@ sequelize
     .then(() => {
         console.log('Connection has been established successfully.');
 
-User.sync({ force: false }).then(() => {
-    Event.sync({ force: false }).then(() => {
-        module.exports = {
-            "User": User,
-            "Event": Event
-        };
-    });
+        User.sync({ force: false }).then(() => {
+            dbEvent.sync({ force: false }).then(() => {
+                console.log('Sync\'d up!');
+            });
 });
 });
 
-
-
-
+module.exports = {
+    "User": User,
+    "dbEvent": dbEvent
+};

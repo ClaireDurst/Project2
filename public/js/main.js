@@ -3,6 +3,24 @@
  *      main.js - the js code to be loaded on every page.
  *
  *-------------------------------------->8------------------------------------*/
+
+ /*
+ AVAILABLE FB fields:
+ id
+cover
+name
+first_name
+last_name
+age_range
+link
+gender
+locale
+picture
+timezone
+updated_time
+verified
+email
+*/
 console.log('=====================================(main)=====================================');
 
 // init UserData object
@@ -20,15 +38,43 @@ var UserData = {
 // functions
 
 function logIn() {
-    // prompt user for fb login, then update login status
-    FB.login(function (status) {
-        loginStatus(status);
-    }, { scope: 'public_profile,email' });
+    // prompt user for fb login, then update login status (localhost testing skips FB completly, pinging the DB server as "testy mctesterson testies@yayaya.com")
+    if (document.URL == "http://localhost:3000/#") {
+        console.log('testing server detected, localhost is prohibited by FB api... will use generic arguments to simulate login, passing them to the database now.');
+        UserData.fb_state = "connected";
+        UserData.isLoggedIn = true;
+        UserData.user_email = "testies@yayaya.com";
+        UserData.user_firstName = "Testy";
+        UserData.user_lastName = "McTesterson";
+        UserData.user_fullName = UserData.first_name + ' ' + UserData.last_name;
+        $.post('/login', { email: UserData.user_email + "" }, (data) => {
+            console.log(data);
+            if (data) {
+                var x = JSON.parse(data);
+                UserData.isNew = false;
+                UserData.user_id = x.id;
+                loggedIn();
+            } else {
+                $.post('/create', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
+                    var x = JSON.parse(data);
+                    UserData.isNew = true;
+                    UserData.user_id = x.id;
+                    loggedIn();
+                })
+            }
+        });
+    } else {
+        console.log('Production Server detected, Using Facebook API!');
+        FB.login(function (status) {
+            loginStatus(status);
+        }, { scope: 'public_profile,email' });
+    }
 
 }
 function loggedIn() {
     $('#nav_logIn').hide();
     $('#nav_logOut').show();
+    console.log(UserData);
 }
 function logOut() {
     // send FB API the logout signal, then run loggedOut()
@@ -53,6 +99,7 @@ function loggedOut() {
 function loginStatus(status) {
     // the function called when FB.login completes;  Runs an API call to FB to
     // get user's info, then checks database for existing user
+
     console.log('FB logins status: (' + status + ')');
     UserData.fb_state = status;
     if (status == "connected") {
@@ -66,21 +113,8 @@ function loginStatus(status) {
             UserData.user_lastName = response.last_name;
             UserData.user_email = response.email;
             UserData.user_fullName = response.first_name + " " + response.last_name;
-            $.post('/login', { firstName: response.first_name, lastName: response.last_name, email: response.email }, (isNew, data) => {
-                // database response recieved... should be [ $isNewUser, ${userData} ]
-                if () {
-                    // seems to be the correct response format, set UserData and run the loggedIn() function
-                    UserData.user_isNew = isNew;
-                    UserData.user_id = data.id;
-                    loggedIn();
-                } else {
-                    // returned data wasn't in the expected formet
-                    alert("ERROR!  Login failed!  Check log for details.");
-                    console.log('FAILED TO RETRIEVE API QUERY FOR USER INFO!  LOGGED OUT AUTOMATICALLY!');
-                    console.log('Details:');
-                    console.log('RESPONSE => ' + response);
-                    logOut();
-                }
+            $.post('/login', { firstName: response.first_name, lastName: response.last_name, email: response.email }, (data) => {
+
             });
         });
     }
@@ -118,10 +152,12 @@ $(document).ready(function() {
         });
         FB.AppEvents.logPageView();
         // query FB for current login status
-        FB.getLoginStatus((resp) => {
-            // update login status
-            loginStatus(resp.status);
-        });
+        if (document.URL != "http://localhost:3000/#") {
+            FB.getLoginStatus((resp) => {
+                // update login status
+                loginStatus(resp.status);
+            });
+        }
     };
 
  });

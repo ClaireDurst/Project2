@@ -26,10 +26,11 @@ app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set("view engine", 'handlebars');
 
 app.post("/login", (req, resp) => {
+    console.log("POST '/login' => " + JSON.stringify(req.body));
     // check for existing user, create one if necessary... respond with the returned data.
-    if (req.body.email && req.body.firstName && req.body.lastName) {
-        ORM.checkUser(req.body.firstName, req.body.lastName, req.body.email, (isNew, data) => {
-            resp.json({ user_isNew: isNew, UserData: data});
+    if (req.body.email) {
+        ORM.checkUser(req.body.email, (data) => {
+            resp.send(data);
         });
     } else {
         resp.send(false);
@@ -37,17 +38,22 @@ app.post("/login", (req, resp) => {
 
 });
 
+app.post("/create", (req, resp) => {
+    if (req.body.email && req.body.firstName && req.body.lastName) {
+        ORM.createUser(req.body.firstName, req.body.lastName, req.body.email, (data) => {
+            var x = JSON.stringify(data);
+            resp.send(x);
+        });
+    }
+});
+
 app.get("/test", (req, resp) => {
-    ORM.checkUser('James', 'Litherland', 'jamlith@gmail.com', (isNew, data) => {
-        console.log()
+    ORM.checkUser('jamlith@gmail.com', (isNew) => {
+        console.log("isNew: " + isNew);
     });
 });
 
 app.use((req, res) => {
-    console.log(req.method);
-    if (toString(req.body) !== "{}") {
-        console.log(req.body);
-    }
     res.render('index', {
         helpers: {
             port: function() {
