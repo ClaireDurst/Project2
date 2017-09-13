@@ -94,7 +94,7 @@ function loggedOut() {
     UserData.user_lastName = undefined;
     UserData.user_fullName = undefined;
     UserData.user_email = undefined;
-    userData.user_isNew = undefined;
+    UserData.user_isNew = undefined;
 }
 function loginStatus(status) {
     // the function called when FB.login completes;  Runs an API call to FB to
