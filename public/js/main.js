@@ -54,7 +54,6 @@ function logIn() {
                 var x = JSON.parse(data);
                 UserData.isNew = false;
                 UserData.user_id = x.id;
-                window.sessionStorage("UserData", UserData);
                 loggedIn();
             } else {
                 $.post('/create', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
@@ -87,19 +86,23 @@ function init() {
     $('#nav_logOut').click((event) => {
         logOut();
     });
+    $('#dropdown01').addClass('disabled');
 }
 function loggedIn() {
     $('#nav_logIn').hide();
     $('#nav_logOut').show();
-    var i = $('<img src=' + UserData.user_picture + '>');
+    var i = $('<img id=nav_profilePic src=' + UserData.user_picture + '>');
     i.prependTo($("#logIn_logOut"));
+    $('#dont_believe_the_hype').fadeOut();
     console.log(UserData);
+    $('#dropdown01').removeClass('disabled');
 }
 function loggedOut() {
     // switch the log out button for a log in button
     $('#nav_logOut').hide();
     $('#nav_logIn').show();
-
+    $('#dont_believe_the_hype').fadeIn();
+    $('#nav_profilePic').detach();
     // reset UserData
     UserData.isLoggedIn = false;
     UserData.fb_state = null;
