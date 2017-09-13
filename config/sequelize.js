@@ -86,7 +86,7 @@ sequelize
 
         User.sync({ force: false }).then(() => {
             dbEvent.sync({ force: false }).then(() => {
-                console.log('Sync\'d up!');
+                console.log('Sequelize is all sync\'d up!');
             });
 });
 });

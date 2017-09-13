@@ -32,6 +32,7 @@ var UserData = {
     user_lastName: undefined,
     user_fullName: undefined,
     user_email: undefined,
+    user_picture: undefined,
     isNew: undefined
 };
 
@@ -53,6 +54,7 @@ function logIn() {
                 var x = JSON.parse(data);
                 UserData.isNew = false;
                 UserData.user_id = x.id;
+                window.sessionStorage("UserData", UserData);
                 loggedIn();
             } else {
                 $.post('/create', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
@@ -71,15 +73,27 @@ function logIn() {
     }
 
 }
-function loggedIn() {
-    $('#nav_logIn').hide();
-    $('#nav_logOut').show();
-    console.log(UserData);
-}
+
 function logOut() {
     // send FB API the logout signal, then run loggedOut()
     FB.logout();
     loggedOut();
+}
+function init() {
+    $('#nav_logOut').hide();
+    $('#nav_logIn').click((event) => {
+        logIn();
+    });
+    $('#nav_logOut').click((event) => {
+        logOut();
+    });
+}
+function loggedIn() {
+    $('#nav_logIn').hide();
+    $('#nav_logOut').show();
+    var profile_pic = $('<img>').attr(src, UserData.user_picture);
+    profile_pic.load($('#jt_container').append(profile_pic));
+    console.log(UserData);
 }
 function loggedOut() {
     // switch the log out button for a log in button
@@ -105,23 +119,27 @@ function loginStatus(status) {
     if (status == "connected") {
         // Connected to FB, query API
         console.log("FB logged in TRUE, querying FB API for user's name/email...");
-        FB.api('/me', { fields: 'first_name,last_name,email' }, (response) => {
+        FB.api('/me', { fields: 'first_name,last_name,email,picture' }, (response) => {
             // API response recieved, use returned info to set UserData & check for/create user in the DB
             console.log("API Response recieved.... " + response.first_name + " " + response.last_name + " -> " + response.email + "; return/create user's database entry.");
             UserData.isLoggedIn = true;
             UserData.user_firstName = response.first_name;
             UserData.user_lastName = response.last_name;
             UserData.user_email = response.email;
+            UserData.user_picture = response.picture;
             UserData.user_fullName = response.first_name + " " + response.last_name;
             $.post('/login', { email: UserData.user_email + "" }, (data) => {
-                console.log(data);
                 if (data) {
+                    // User exists, saving id to UserData object and completing login sequence
                     var x = JSON.parse(data);
                     UserData.isNew = false;
                     UserData.user_id = x.id;
                     loggedIn();
                 } else {
+                    // Create new user in DB
+                    console.log('Posting user details to be written to users table in DB.');
                     $.post('/create', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
+                        // User created, writing info to UserData object and completing login sequence
                         var x = JSON.parse(data);
                         UserData.isNew = true;
                         UserData.user_id = x.id;
@@ -132,15 +150,7 @@ function loginStatus(status) {
         });
     }
 }
-function init() {
-    $('#nav_logOut').hide();
-    $('#nav_logIn').click((event) => {
-        logIn();
-    });
-    $('#nav_logOut').click((event) => {
-        logOut();
-    });
-}
+
 
 // Facebook API load/init
 (function (d, s, id) {
@@ -165,7 +175,7 @@ $(document).ready(function() {
         });
         FB.AppEvents.logPageView();
         // query FB for current login status
-        if (document.URL != "http://localhost:3000/#") {
+        if (document.URL.indexOf("localhost") != -1) {
             FB.getLoginStatus((resp) => {
                 // update login status
                 loginStatus(resp.status);
