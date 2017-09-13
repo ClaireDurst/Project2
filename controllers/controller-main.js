@@ -38,7 +38,9 @@ app.post("/login", (req, resp) => {
 });
 
 app.get("/test", (req, resp) => {
-    ORM.checkUser('James', 'Litherland', 'jamlith@gmail.com', ())
+    ORM.checkUser('James', 'Litherland', 'jamlith@gmail.com', (isNew, data) => {
+        console.log()
+    });
 });
 
 app.use((req, res) => {
