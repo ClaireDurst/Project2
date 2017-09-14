@@ -52,6 +52,9 @@ app.get("/test", (req, resp) => {
         console.log("isNew: " + isNew);
     });
 });
+app.get('/christin', (req, resp) => {
+    resp.sendFile(path.join(__dirname, "./../public/christin.html"));
+})
 
 app.get("/form/createEvent", (req, resp) =>{
     resp.render('form_createEvent', {
