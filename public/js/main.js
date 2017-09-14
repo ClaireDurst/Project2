@@ -114,6 +114,7 @@ function loggedOut() {
     $('#nav_logIn').show();
     $('#dont_believe_the_hype').fadeIn();
     $('#nav_profilePic').detach();
+    $('#dropdown01').addClass('disabled');
     // reset UserData
     UserData.isLoggedIn = false;
     UserData.fb_state = null;
