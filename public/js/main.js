@@ -87,7 +87,9 @@ function logOut() {
 function init() {
     $('#nav_logOut').hide();
     $('#nav_logIn').click((event) => {
-        logIn();
+        FB.login((resp) => {
+            loginStatus(resp.status);
+        }, { scope: "public_profile,email" });
     });
     $('#nav_logOut').click((event) => {
         logOut();
@@ -166,7 +168,7 @@ function loginStatus(status) {
 
 // Facebook API load/init
 (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[ 0 ];
+    var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) { return; }
     js = d.createElement(s); js.id = id;
     js.src = "//connect.facebook.net/en_US/sdk.js";
@@ -177,23 +179,22 @@ function loginStatus(status) {
 $(document).ready(function() {
     console.log("DOM loaded!");
     init();
-
     window.fbAsyncInit = function () {
-        console.log('FB async init');
         FB.init({
             appId: '103017880442508',
             cookie: true,
             xfbml: true,
-            version: 'v2.10'
+            version: 'v2.8'
         });
-        FB.AppEvents.logPageView();
         // query FB for current login status
         console.log('about to getLoginStatus');
-            FB.getLoginStatus((resp) => {
-                console.log('FB login status response');
-                // update login status
-                loginStatus(resp.status);
-            });
+        FB.getLoginStatus((resp) => {
+            console.log('FB login status response');
+            console.log(resp);
+            // update login status
+            loginStatus(resp.status);
+        });
     };
+
 
  });
