@@ -41,42 +41,42 @@ var User = sequelize.define('user', {
 
 
 
-var dbEvent = sequelize.define('event', {
-    event_id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    event_name: {
-        type: Sequelize.STRING,
-        allowNull:false,
-        validator: {
-            is: ["[a-z_", 'i']
-        }
-    },
-    event_description: {
-        type: Sequelize.TEXT,
-        allowNull: true
-    },
-    event_collaborators: {
-        type: Sequelize.JSON,
-        allowNull: true,
-        defaultValue: null
-    },
-    event_goal: {
-        type: Sequelize.DATEONLY,
-        allowNull: true,
-        defaultValue: null
-    },
-    event_is_complete: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: 0
-    }
-});
+// var dbEvent = sequelize.define('event', {
+//     event_id: {
+//         type: Sequelize.INTEGER,
+//         autoIncrement: true,
+//         primaryKey: true
+//     },
+//     event_name: {
+//         type: Sequelize.STRING,
+//         allowNull:false,
+//         validator: {
+//             is: ["[a-z_", 'i']
+//         }
+//     },
+//     event_description: {
+//         type: Sequelize.TEXT,
+//         allowNull: true
+//     },
+//     event_collaborators: {
+//         type: Sequelize.JSON,
+//         allowNull: true,
+//         defaultValue: null
+//     },
+//     event_goal: {
+//         type: Sequelize.DATEONLY,
+//         allowNull: true,
+//         defaultValue: null
+//     },
+//     event_is_complete: {
+//         type: Sequelize.BOOLEAN,
+//         allowNull: false,
+//         defaultValue: 0
+//     }
+// });
 
 var Project = sequelize.define('project', {
-    project_id: {
+    id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
@@ -118,25 +118,57 @@ User.hasMany(Project, {
     onDelete: "CASCADE"
 });
 
-var Task = sequelize.define('task', {
-    
+var SubTask = sequelize.define('subtask', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    subtask_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    subtask_description: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    subtask_assigned_to: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "owner"
+    },
+    subtask_status: {
+        type: Sequelize.ENUM('pending', 'stalled', 'on_schedule', 'delayed', 'complete'),
+        allowNull: false,
+        defaultValue: 'pending'
+    },
+    subtask_goal_date: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.NOW
+    }
 });
 
+Project.hasMany(SubTask, {
+    onDelete: "CASCADE"
+});
 
 // force: true will drop the table if it already exists
 sequelize
     .authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
-
         User.sync({ force: false }).then(() => {
             Project.sync({ force: false }).then(() => {
-                console.log('Sequelize is all sync\'d up!');
+                SubTask.sync({ force: false }).then(() => {
+                    console.log('Sequelize is all sync\'d up!');
+                });
             });
-});
-});
+        });
+    });
 
 module.exports = {
     "User": User,
-    "dbEvent": dbEvent
+    "Project": Project,
+    "SubTask": SubTask
 };

@@ -104,8 +104,8 @@ function init() {
     $('#nav_logOut').click((event) => {
         logOut();
     });
-    $('#nav_newEvent').click((event) => {
-        replaceJumbotron('form/createEvent');
+    $('#nav_newProject').click((event) => {
+        replaceModal('form/createEvent');
     });
     $('#dropdown01').addClass('disabled');
 }
