@@ -1,30 +1,101 @@
-
 </div>
-<div class='row' id='calandar-weekly-row'>
-    <div class='calandar-weekly-day card'>
-        <div class='card-header'>(day)</div>
-        <ul class='list-group list-group-flush'>
-            <li class='list-group-item'>Task</li>
-            <li class='list-group-item'>Task 2</li>
-        </ul>
-        <div class='card-body'>
-            <h4>Summary:</h4>
-            <p>Task:</p>
-            <small class='text-muted'>(task summary)</small>
+<div class='container-fluid'>
+    <div class='row' id='calandar-weekly-row'>
+        <div class='calandar-weekly-day card' id='card1'>
+            <div class='card-header'>(day)</div>
+            <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>Task</li>
+                <li class='list-group-item'>Task 2</li>
+            </ul>
+            <div class='card-body'>
+                <h4>Summary:</h4>
+                <p>Task:</p>
+                <small class='text-muted'>(task summary)</small>
+            </div>
+        </div>
+        <div class='calandar-weekly-day card' id='card2'>
+            <div class='card-header'>(day)</div>
+            <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>Task</li>
+                <li class='list-group-item'>Task 2</li>
+            </ul>
+            <div class='card-body'>
+                <h4>Summary:</h4>
+                <p>Task:</p>
+                <small class='text-muted'>(task summary)</small>
+            </div>
+        </div>
+        <div class='calandar-weekly-day card' id='card3'>
+            <div class='card-header'>(day)</div>
+            <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>Task</li>
+                <li class='list-group-item'>Task 2</li>
+            </ul>
+            <div class='card-body'>
+                <h4>Summary:</h4>
+                <p>Task:</p>
+                <small class='text-muted'>(task summary)</small>
+            </div>
+        </div>
+        <div class='calandar-weekly-day card' id='card4'>
+            <div class='card-header'>(day)</div>
+            <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>Task</li>
+                <li class='list-group-item'>Task 2</li>
+            </ul>
+            <div class='card-body'>
+                <h4>Summary:</h4>
+                <p>Task:</p>
+                <small class='text-muted'>(task summary)</small>
+            </div>
+        </div>
+        <div class='calandar-weekly-day card' id='card5'>
+            <div class='card-header'>(day)</div>
+            <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>Task</li>
+                <li class='list-group-item'>Task 2</li>
+            </ul>
+            <div class='card-body'>
+                <h4>Summary:</h4>
+                <p>Task:</p>
+                <small class='text-muted'>(task summary)</small>
+            </div>
+        </div>
+        <div class='calandar-weekly-day card' id='card6'>
+            <div class='card-header'>(day)</div>
+            <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>Task</li>
+                <li class='list-group-item'>Task 2</li>
+            </ul>
+            <div class='card-body'>
+                <h4>Summary:</h4>
+                <p>Task:</p>
+                <small class='text-muted'>(task summary)</small>
+            </div>
+        </div>
+        <div class='calandar-weekly-day card' id='card7'>
+            <div class='card-header'>(day)</div>
+            <ul class='list-group list-group-flush'>
+                <li class='list-group-item'>Task</li>
+                <li class='list-group-item'>Task 2</li>
+            </ul>
+            <div class='card-body'>
+                <h4>Summary:</h4>
+                <p>Task:</p>
+                <small class='text-muted'>(task summary)</small>
+            </div>
         </div>
     </div>
 </div>
 <script>
     var weekOf = '{{week_of}}';
     function addDay(qty) {
-        return moment(weekOf, 'MM-DD-YYYY').add(qty, 'days').format("MM-DD-YYYY");
+        return moment(weekOf, 'MM-DD-YYYY').add(qty, 'days').format('MM-DD-YYYY');
     }
-    var strOut="";
-    var template = $(".calandar-weekly-day").data('date', addDay(0));
 
-    for (var i = 1; i < 4; i++) {
-        var current = template.clone();
-        current.data('date', addDay(i));
-        current.appendTo($('#calandar-weekly-row'));
+    for (var i = 1; i < 7; i++) {
+        var cardDate = addDay(i);
+        $('#card' + (i + 1) + ' .card-header').text(cardDate);
     }
+
 </script>
