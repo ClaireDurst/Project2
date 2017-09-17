@@ -46,22 +46,23 @@
         var ptn = /^[a-z]+[a-z0-9_.-]*[@][a-z]+[a-z0-9_.-]*[.][a-z]{3}$/i
         if (ptn.test(email)) {
             if (collabs.indexOf(email) == -1) {
+                var cidx = collabs.push(email);
                 $('#InputCollaboratorEmail').removeClass('invalid');
                 $('#CollaboratorsHelp').removeClass('text-danger');
                 $('#CollaboratorsHelp').text('Email Added.')
-                var li = $('<li id="' + email + '">');
+                var li = $('<li id="collab' + cidx + '">');
                 li.append("<p>").text(email);
-                li.append("<a class='mr-0' href='#' id='" + email + "del'>").text('&times;');
-                $("#" + email + "del").click((event) => {
+                li.append("<a class='mr-0' href='#' id='collab" + cidx + "del'>").text('&times;');
+                $('#collaboratorsList').append(li);
+                $("#collab" + cidx + "del").click((event) => {
                     collabs = collabs.filter((val) => {
                         if (val !== email) {
                             return val;
                         }
                     });
-                    $("#" + email).detach();
+                    $("#collab" + cidx).detach();
                 });
-                collabs.push(email);
-                $('#collaboratorsList').append(li);
+
             } else {
                 $('#InputCollaboratorEmail').addClass('invalid');
                 $('#CollaboratorsHelp').addClass('text-danger');
