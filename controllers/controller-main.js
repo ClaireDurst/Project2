@@ -79,6 +79,12 @@ app.get("/form/:formName", (req, resp) =>{
     });
 });
 
+app.get('/jt/:jtName', (req, resp) => {
+    resp.render('jt_' + req.params.jtName, {
+        layout: "empty"
+    });
+});
+
 app.use((req, res) => {
     res.render('index', {
         helpers: {

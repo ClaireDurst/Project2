@@ -21,7 +21,7 @@
 </div>
 <div class="form-group">
     <label form="InputCollaborators">Invite Collaborators:</label>
-    <div class='input-group'><input type="email" class="form-control" id="InputCollaboratorEmail" aria-describedby="CollaboratorsHelp" placeholder="Email Address"><span class='input-group-btn'><a class='btn btn-secondary' id='addColaborator'><i class="fa fa-user-plus" aria-hidden="true"></i></a></div>
+    <div class='input-group'><input type="email" class="form-control" id="InputCollaboratorEmail" aria-describedby="CollaboratorsHelp" placeholder="Email Address"><span class='input-group-btn'><a class='btn btn-secondary' id='addCollaborator'><i class="fa fa-user-plus" aria-hidden="true"></i></a></div>
     <ul class="list-group" id='collaboratorsList'></div>
     <small id="CollaboratorsHelp" class="form-text text-muted">This is the team you will be working with to complete this project.</small>
 </div>
@@ -41,8 +41,8 @@
 </div>
 <script>
     var collabs = [];
-    function addColabEmail() {
-        var email = $("#InputCollaboratorEmail");
+    function addCollabEmail() {
+        var email = $("#InputCollaboratorEmail").val();
         var ptn = /^[a-z]+[a-z0-9_.-]*[@][a-z]+[a-z0-9_.-]*[.][a-z]{3}$/i
         if (ptn.test(email)) {
             if (collabs.indexOf(email) == -1) {
@@ -77,6 +77,13 @@
     $('#InputProjectCompleteDate').val('{{next_week}}');
     // set modal submit button's text
     $('#button_SubmitModal').text('Create Project');
+    // collab add btn click
+    $('#addCollaborator').click((event) => {
+        addCollabEmail();
+    });
+    $('#InputCollaboratorEmail').keypress(13, (event) => {
+        addCollabEmail();
+    });
     // submit button click
     $('#button_SubmitModal').click((event) => {
         console.log('Chachaaaaang!');

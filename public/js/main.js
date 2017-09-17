@@ -106,7 +106,7 @@ function loggedIn() {
     console.log(UserData);
     $('#dropdown01').removeClass('disabled');
     $('#dropdown02').removeClass('disabled');
-
+    replaceJumbotron('jt/loggedIn');
 }
 function loggedOut() {
     // switch the log out button for a log in button
@@ -116,6 +116,7 @@ function loggedOut() {
     $('#nav_profilePic').detach();
     $('#dropdown01').addClass('disabled');
     $('#dropdown02').addClass('disabled');
+    replaceJumbotron('jt/loggedOut');
     // reset UserData
     UserData.isLoggedIn = false;
     UserData.fb_state = null;

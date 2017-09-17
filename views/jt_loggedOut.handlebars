@@ -1,1 +1,12 @@
-{!--  --}
+{!-- Logged out jumbotron --}
+<H1>Welcome!</H1>
+<hr>
+<P>Log in to continue!</P>
+<a href="#" class="btn btn-outline-success" id="jt_logIn">Log In</a>
+<script>
+    $('#jt_logIn').click((event) => {
+        FB.login((resp) => {
+            loginStatus(resp.status);
+        });
+    });
+</script>
