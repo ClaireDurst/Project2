@@ -53,10 +53,10 @@ app.get("/form/createProject", (req, resp) =>{
         layout: "empty",
         helpers: {
             today: function() {
-                return moment().format('MM/DD/YYYY');
+                return moment().format('YYYY-MM-DD');
             },
             next_week: function() {
-                return moment().add(1, "week").format('MM/DD/YYYY');
+                return moment().add(1, "week").format('YYYY-MM-DD');
             }
         }
     });
