@@ -11,12 +11,12 @@
 </div>
 <div class="form-group">
     <label for="InputProjectStartDate">Project start date:</label>
-    <input type="date" class="form-control" id="InputProjectDate" aria-describedby="ProjectDateHelp" default='{{today}}'>
+    <input type="date" class="form-control" id="InputProjectDate" aria-describedby="ProjectDateHelp">
     <small id="ProjectDateHelp" class="form-text text-muted">The project's start date.</small>
 </div>
 <div class="form-group">
     <label for="InputProjectCompleteDate">Target completion date:</label>
-    <input type="date" class="form-control" id="InputProjectCompleteDate" aria-describedby="ProjectCompleteDateHelp" default='{{next_week}}'>
+    <input type="date" class="form-control" id="InputProjectCompleteDate" aria-describedby="ProjectCompleteDateHelp">
     <small id="ProjectCompleteDateHelp" class="form-text text-muted">A target date for realizing the project's goals.</small>
 </div>
 <div class="form-group">
@@ -52,4 +52,6 @@
     $('#ProjectDateHelp').click((event) => {
         console.log($('#InputProjectDate').val());
     });
+    $('#InputProjectDate').val('{{today}}');
+    $('#InputProjectCompleteDate').val('{{next_week}}');
 </script>
