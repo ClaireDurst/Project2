@@ -5,9 +5,20 @@
  *
  *------------------------------------->8-------------------------------------*/
 
+ * {
+     box-sizing: border-box;
+ }
 
-.planner_panel {
+#calandar-weekly-row {
+    max-height: 450px;
+    overflow: hidden;
+    display: flex;
+    align-content: top;
+    justify-content: space-between;
+}
+.calandar-weekly-day {
+    width: 14%;
+    display: inline-block;
     height: 100%;
-    width: 350px;
-    
+    overflow: hidden;
 }

@@ -1,14 +1,17 @@
 
-<div class='calandar_day card'>
-    <div class='card-header'>(day)</div>
-    <ul class='list-group list-group-flush'>
-        <li class='list-group-item'>Task</li>
-        <li class='list-group-item'>Task 2</li>
-    </ul>
-    <div class='card-body'>
-        <h2>Summary:</h2>
-        Task-
-        (task summary)
+
+<div class='row' id='calandar-weekly-row'>
+    <div class='calandar-weekly-day card'>
+        <div class='card-header'>(day)</div>
+        <ul class='list-group list-group-flush'>
+            <li class='list-group-item'>Task</li>
+            <li class='list-group-item'>Task 2</li>
+        </ul>
+        <div class='card-body'>
+            <h4>Summary:</h4>
+            <p>Task:</p>
+            <small class='text-muted'>(task summary)</small>
+        </div>
     </div>
 </div>
 <script>
@@ -17,6 +20,11 @@
         return moment(weekOf, 'MM-DD-YYYY').add(qty, 'days').format("MM-DD-YYYY");
     }
     var strOut="";
-    for (var i = 0; i < 7; i++) {
+    var template = $(".calandar-weekly-day").data('date', addDay(0));
+
+    for (var i = 1; i < 4; i++) {
+        var current = template.clone();
+        current.data('date', addDay(i));
+        current.appendTo($('#calandar-weekly-row'));
     }
 </script>
