@@ -2,11 +2,6 @@
 <link rel="stylesheet" href="css/index_style.css">
 <div class="jumbotron">
     <div class="container" id="jt_container">
-        <!--
-        <h1 class="display-3"><i class="fa fa-hand-spock-o fa-5x" aria-hidden="true"></i>Lolz</h1>
-        <p>Much dynamic.  So wow.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button" id="">Learn more &raquo;</a></p>
-        -->
         <h1>Howdy, stranger!</H1>  <small class="muted">Let's get to know each other...
         <div class="divider"></div>
         <h3>Simply log in using your facebook account to begin, no fuss, no forms to fill out, and no
@@ -43,9 +38,29 @@
             </p>
             <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
         </div>
+        <hr>
     </div>
 
-    <hr>
+    <!-- Modal -->
+    <div class="modal fade" id="form_modal" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_label">User Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal_body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_SubmitModal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; Christin, Claire, and James 2017</p>

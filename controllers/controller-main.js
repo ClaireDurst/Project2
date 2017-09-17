@@ -8,6 +8,7 @@ var express = require('express')
   , handlebars = require('express-handlebars')
   , bodyparser = require('body-parser')
   , path = require('path')
+  , moment = require('moment')
   , ORM = require(path.join(__dirname, '/../config/orm.js'));
 
 var PORT = process.env.PORT || 3000;
@@ -38,7 +39,7 @@ app.post("/login", (req, resp) => {
 
 });
 
-app.post("/create", (req, resp) => {
+app.post("/createUser", (req, resp) => {
     if (req.body.email && req.body.firstName && req.body.lastName) {
         ORM.createUser(req.body.firstName, req.body.lastName, req.body.email, (data) => {
             var x = JSON.stringify(data);
@@ -47,21 +48,15 @@ app.post("/create", (req, resp) => {
     }
 });
 
-app.get("/test", (req, resp) => {
-    ORM.checkUser('jamlith@gmail.com', (isNew) => {
-        console.log("isNew: " + isNew);
-    });
-});
-app.get('/christin', (req, resp) => {
-    resp.sendFile(path.join(__dirname, "./../public/christin.html"));
-})
-
-app.get("/form/createEvent", (req, resp) =>{
-    resp.render('form_createEvent', {
+app.get("/form/createProject", (req, resp) =>{
+    resp.render('form_createProject', {
         layout: "empty",
         helpers: {
             today: function() {
-                return Date.now();
+                return moment().format('MM/DD/YYYY');
+            },
+            next_week: function() {
+                return moment().add(1, "week").format('MM/DD/YYYY');
             }
         }
     });

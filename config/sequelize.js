@@ -63,7 +63,7 @@ var dbEvent = sequelize.define('event', {
         allowNull: true,
         defaultValue: null
     },
-    event_deadline: {
+    event_goal: {
         type: Sequelize.DATEONLY,
         allowNull: true,
         defaultValue: null
@@ -75,10 +75,51 @@ var dbEvent = sequelize.define('event', {
     }
 });
 
+var Project = sequelize.define('project', {
+    project_id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    project_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    project_description: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    project_start_date: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
+    },
+    project_goal_date: {
+        type: Sequelize.DATE,
+        allowNull: true
+    },
+    project_collaborators: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    project_privacy: {
+        type: Sequelize.ENUM('public', 'hidden', 'private'),
+        allowNull: false,
+        defaultValue: "private"
+    },
+    project_status: {
+        type: Sequelize.ENUM('pending', 'stalled', 'on_schedule', 'delayed', 'complete'),
+        allowNull: false,
+        defaultValue: "pending"
+    }
+});
 
-
-User.hasMany(dbEvent, {
+User.hasMany(Project, {
     onDelete: "CASCADE"
+});
+
+var Task = sequelize.define('task', {
+    
 });
 
 
@@ -89,7 +130,7 @@ sequelize
         console.log('Connection has been established successfully.');
 
         User.sync({ force: false }).then(() => {
-            dbEvent.sync({ force: false }).then(() => {
+            Project.sync({ force: false }).then(() => {
                 console.log('Sequelize is all sync\'d up!');
             });
 });

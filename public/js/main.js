@@ -44,9 +44,9 @@ function logIn() {
         console.log('testing server detected, localhost is prohibited by FB api... will use generic arguments to simulate login, passing them to the database now.');
         UserData.fb_state = "connected";
         UserData.isLoggedIn = true;
-        UserData.user_email = "testies@yayaya.com";
-        UserData.user_firstName = "Testy";
-        UserData.user_lastName = "McTesterson";
+        UserData.user_email = "jamlith@gmail.com";
+        UserData.user_firstName = "James";
+        UserData.user_lastName = "Litherland";
         UserData.user_fullName = UserData.first_name + ' ' + UserData.last_name;
         $.post('/login', { email: UserData.user_email + "" }, (data) => {
             console.log(data);
@@ -56,7 +56,7 @@ function logIn() {
                 UserData.user_id = x.id;
                 loggedIn();
             } else {
-                $.post('/create', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
+                $.post('/createUser', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
                     var x = JSON.parse(data);
                     UserData.isNew = true;
                     UserData.user_id = x.id;
@@ -79,6 +79,16 @@ function replaceJumbotron(endpoint) {
     });
 }
 
+function replaceModal(label, endpoint, cb = function() {
+    $('#form_modal').modal('show');
+}) {
+    $('#modal_label').text(label);
+    $.get(endpoint, (html) => {
+        $('#modal_body').html(html);
+        return cb();
+    });
+}
+
 function logOut() {
     // send FB API the logout signal, then run loggedOut()
     FB.logout();
@@ -95,7 +105,7 @@ function init() {
         logOut();
     });
     $('#nav_newEvent').click((event) => {
-        replaceJumbotron('forms/createEvent');
+        replaceJumbotron('form/createEvent');
     });
     $('#dropdown01').addClass('disabled');
 }

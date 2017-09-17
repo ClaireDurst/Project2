@@ -1,7 +1,7 @@
 <div class="form-group">
-    <label for="InputEventname">Task name:</label>
-    <input type="text" class="form-control" id="InputEventname" aria-describedby="EventnameHelp" placeholder="Event Name">
-    <small id="EventnameHelp" class="form-text text-muted">A short handle that will title your goal.</small>
+    <label for="InputProjectName">Project name:</label>
+    <input type="text" class="form-control" id="InputProjectName" aria-describedby="ProjectNameHelp" placeholder="Project Name">
+    <small id="ProjectNameHelp" class="form-text text-muted">A short handle that will title your goal.</small>
 </div>
 <div class="form-group">
     <label for="InputEventDesc">Description:</label>
@@ -9,7 +9,30 @@
     <small id="EventDescHelp" class="form-text text-muted">A quick explaination of the task at hand.</small>
 </div>
 <div class="form-group">
-    <label for="InputEventDate">Target date:</label>
+    <label for="InputEventDate">Target completion date:</label>
     <input type="date" class="form-control" id="InputEventDate" aria-describedby="EventDateHelp" default='{{today}}'>
     <small id="EventDateHelp" class="form-text text-muted">A date you hope to complete the task by.</small>
+</div>
+<div class="form-group">
+    <label form="InputCollaborators">Invite Collaborators:</label>
+    <input type="text" class="form-control" id="InputCollaboratorEmail" aria-describedby="CollaboratorsHelp" placeholder="Email Address">
+    <small id="CollaboratorsHelp" class="form-text text-muted">List the email adresses to invite to collaborate on this
+        event.  This should only include users that have a role in this event, and will give you the ability to assign
+        responsibilties to them, and allow them to create new TODO's, as well as update the status of tasks that belong
+        to them.  Seperate multiple emails with a semicolon.</small>
+</div>
+<div class="form-group">
+    <label form="SelectPrivacyOptions">Who can see this event:</label>
+    <select class="form-control" id="SelectPrivacyOptions" aria-describedby="SelectPrivacyHelp">
+        <option value="public" selected>Everyone</option>
+        <option value="hidden">Anyone with the link</option>
+        <option value="private">Only the collaborators and myself</option>
+    </select>
+    <small id="SelectPrivacyHelp" class="form-text text-muted">How to share this event... 'everyone' will display this event
+        on your profile, allowing anyone to see it that looks at your page.  'Anyone with the link' will set the display to
+        hidden, so the event will not be included on your public calander, but will let someone with the link to the event's
+        url access its details and status.  The final option will only allow the users expressly named to view the event and its
+        details.
+    </small>
+
 </div>

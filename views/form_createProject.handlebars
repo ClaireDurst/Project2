@@ -1,0 +1,49 @@
+<h3>Create a Project:</h3>
+<small class="text-muted">A project is basically a wrapper for a group of tasks... </small>
+<div class="form-group">
+    <label for="InputProjectName">Project name:</label>
+    <input type="text" class="form-control" id="InputProjectName" aria-describedby="ProjectNameHelp" placeholder="Project Name">
+    <small id="ProjectNameHelp" class="form-text text-muted">A short handle that will title your goal.</small>
+</div>
+<div class="form-group">
+    <label for="InputProjectDesc">Description:</label>
+    <textarea class="form-control" id="InputProjectDesc" aria-describedby="ProjectDescHelp" placeholder="A brief description..."></textarea>
+    <small id="ProjectDescHelp" class="form-text text-muted">A quick explaination of the task at hand.</small>
+</div>
+<div class="form-group">
+    <label for="InputProjectStartDate">Project start date:</label>
+    <input type="date" class="form-control" id="InputProjectDate" aria-describedby="ProjectDateHelp" default='{{today}}'>
+    <small id="ProjectDateHelp" class="form-text text-muted">The project's start date.</small>
+</div>
+<div class="form-group">
+    <label for="InputProjectCompleteDate">Target completion date:</label>
+    <input type="date" class="form-control" id="InputProjectCompleteDate" aria-describedby="ProjectCompleteDateHelp" default='{{next_week}}'>
+    <small id="ProjectCompleteDateHelp" class="form-text text-muted">A target date for realizing the project's goals.</small>
+</div>
+<div class="form-group">
+    <label form="InputCollaborators">Invite Collaborators:</label>
+    <input type="email" class="form-control" id="InputCollaboratorEmail" aria-describedby="CollaboratorsHelp" placeholder="Email Address">
+    <div class="list-group" id='collaboratorsList'></div>
+    <small id="CollaboratorsHelp" class="form-text text-muted">Invite friends and collegues to collaborate on this
+        Project.  This should only include users that have a role in this Project, and each collaborator will have the ability to assume
+        responsibilties for sub-tasks, create new sub-tasks, and update the status of sub-tasks that belong
+        to them.  Hit enter to add an email to the list.</small>
+</div>
+<div class="form-group">
+    <label form="SelectPrivacyOptions">Privacy options:</label>
+    <select class="form-control" id="SelectPrivacyOptions" aria-describedby="SelectPrivacyHelp">
+        <option value="public" selected>Public</option>
+        <option value="hidden">Hidden</option>
+        <option value="private">Private</option>
+    </select>
+    <small id="SelectPrivacyHelp" class="form-text text-muted">How to share this Project... 'Public' will display this Project
+        on your profile, allowing anyone to see it on your calander.  Hidden will hide the Project on your public calander, but anyone with the project's
+        url can access its details and status.  The final option will allow only the users expressly named to view the Project and its
+        details.
+    </small>
+
+</div>
+<button class="btn btn-primary btn-lg" id="button_createProject">Create Project</button>
+<script>
+    $('')
+</script>
