@@ -1,8 +1,11 @@
 {{!-- Logged out jumbotron --}}
+<div class='container'>
+
 <H1>Welcome!</H1>
 <hr>
 <P>Log in to continue!</P>
 <a href="#" class="btn btn-outline-success" id="jt_logIn">Log In</a>
+</div>
 <script>
     $('#jt_logIn').click((event) => {
         FB.login((resp) => {
