@@ -51,7 +51,7 @@
                 $('#CollaboratorsHelp').text('Email Added.')
                 var li = $('<li id="' + email + '">');
                 li.append("<p>").text(email);
-                li.append("<a class='mr-0' href='#' id='" + email + "del'>&times;</a>");
+                li.append("<a class='mr-0' href='#' id='" + email + "del'>").text('&times;');
                 $("#" + email + "del").click((event) => {
                     collabs = collabs.filter((val) => {
                         if (val !== email) {
@@ -61,6 +61,7 @@
                     $("#" + email).detach();
                 });
                 collabs.push(email);
+                $('#collaboratorsList').append(li);
             } else {
                 $('#InputCollaboratorEmail').addClass('invalid');
                 $('#CollaboratorsHelp').addClass('text-danger');
