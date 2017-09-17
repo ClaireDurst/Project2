@@ -40,42 +40,21 @@ var UserData = {
 
 function logIn() {
     // prompt user for fb login, then update login status (localhost testing skips FB completly, pinging the DB server as "testy mctesterson testies@yayaya.com")
-    if (document.URL == "http://localhost:3000/#") {
-        console.log('testing server detected, localhost is prohibited by FB api... will use generic arguments to simulate login, passing them to the database now.');
-        UserData.fb_state = "connected";
-        UserData.isLoggedIn = true;
-        UserData.user_email = "jamlith@gmail.com";
-        UserData.user_firstName = "James";
-        UserData.user_lastName = "Litherland";
-        UserData.user_fullName = UserData.first_name + ' ' + UserData.last_name;
-        $.post('/login', { email: UserData.user_email + "" }, (data) => {
-            console.log(data);
-            if (data) {
-                var x = JSON.parse(data);
-                UserData.isNew = false;
-                UserData.user_id = x.id;
-                loggedIn();
-            } else {
-                $.post('/createUser', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
-                    var x = JSON.parse(data);
-                    UserData.isNew = true;
-                    UserData.user_id = x.id;
-                    loggedIn();
-                });
-            }
-        });
-    } else {
-        console.log('Production Server detected, Using Facebook API!');
-        FB.login(function (resp) {
-            loginStatus(resp.status);
-        }, { scope: 'public_profile,email,picture' });
-    }
-
+    FB.login(function (resp) {
+        console.log(resp.status);
+        loginStatus(resp.status);
+    }, { scope: 'public_profile,email,picture' });
 }
 
 function replaceJumbotron(endpoint) {
     $.get(endpoint, (html) => {
         $('#jt_container').html(html);
+    });
+}
+
+function replaceContent(endpoint) {
+    $.get(endpoint, (html) => {
+        $("#content_container").html(html);
     });
 }
 
@@ -108,6 +87,15 @@ function init() {
         replaceModal('Create a New Project', 'form/createProject');
     });
     $('#dropdown01').addClass('disabled');
+    $('#dropdown02').addClass('disabled');
+    $('#jt_logIn').click((event) => {
+        FB.login((resp) => {
+            loginStatus(resp.status);
+        });
+    });
+    $('#nav_weeklyView').click((event) => {
+        replaceJumbotron('view/calandarWeek/' + moment().format("MM-DD-YYYY"));
+    });
 }
 function loggedIn() {
     $('#nav_logIn').hide();
@@ -117,6 +105,8 @@ function loggedIn() {
     $('#dont_believe_the_hype').fadeOut();
     console.log(UserData);
     $('#dropdown01').removeClass('disabled');
+    $('#dropdown02').removeClass('disabled');
+
 }
 function loggedOut() {
     // switch the log out button for a log in button
@@ -125,6 +115,7 @@ function loggedOut() {
     $('#dont_believe_the_hype').fadeIn();
     $('#nav_profilePic').detach();
     $('#dropdown01').addClass('disabled');
+    $('#dropdown02').addClass('disabled');
     // reset UserData
     UserData.isLoggedIn = false;
     UserData.fb_state = null;

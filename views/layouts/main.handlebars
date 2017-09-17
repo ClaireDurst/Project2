@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
         crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Anton|Cedarville+Cursive|PT+Sans|Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.css">
     <link rel="stylesheet" href="css/global_style.css">
 
@@ -29,12 +28,20 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown" id="nav_dropdown_events">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Planner</a>
+                <li class="nav-item dropdown" id="nav_dropdown_views">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Views</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#" id='nav_weeklyView'>Weekly</a>
+                        <a class="dropdown-item" href="#" id='nav_monthlyView'>Monthly</a>
+                        <a class="dropdown-item" href="#" id="nav_OTHER">Other?</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" id="nav_dropdown_projects">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown02">
                         <a class="dropdown-item" href="#" id='nav_listProjects'>List My Projects</a>
                         <a class="dropdown-item" href="#" id='nav_newProject'>New Project</a>
-                        <a class="dropdown-itmm" href="#" id="nav_manageProject">Manage Project</a>
+                        <a class="dropdown-item" href="#" id="nav_manageProject">Manage Project</a>
                     </div>
                 </li>
             </ul>

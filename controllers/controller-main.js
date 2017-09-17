@@ -48,8 +48,25 @@ app.post("/createUser", (req, resp) => {
     }
 });
 
-app.get("/form/createProject", (req, resp) =>{
-    resp.render('form_createProject', {
+app.get("/view/calandarWeek/:weekof", (req, resp) => {
+    var weekOf = req.params.weekOf;
+    var rx = /[0-9]{2}[-][0-9]{2}[-][0-9]{4}/;
+    if (! rx.test(weekOf)) {
+        weekOf = moment().format('MM-DD-YYYY');
+    }
+    resp.render('view_calandarWeek', {
+        layout: 'empty',
+        helpers: {
+            week_of: function() {
+                return weekOf;
+            }
+        }
+    });
+});
+
+
+app.get("/form/:formName", (req, resp) =>{
+    resp.render('form_' + req.params.formName, {
         layout: "empty",
         helpers: {
             today: function() {

@@ -1,0 +1,13 @@
+
+<div id="wk_out"></div>
+<script>
+    var weekOf = '{{week_of}}';
+    function addDay(qty) {
+        return moment(weekOf, 'MM-DD-YYYY').add(qty, 'days').format("MM-DD-YYYY");
+    }
+    var strOut="";
+    for (var i = 0; i < 7; i++) {
+        strOut+=addDay(i) + "<BR>";
+    }
+    $('#wk_out').html(strOut);
+</script>
