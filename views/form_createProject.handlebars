@@ -43,7 +43,7 @@
     var collabs = [];
     function addCollabEmail() {
         var email = $("#InputCollaboratorEmail").val();
-        var ptn = /^[a-z]+[a-z0-9_.-]*[@][a-z]+[a-z0-9_.-]*[.][a-z]{3}$/i
+        var ptn = /^[a-z]+[a-z0-9_.-]*[@][a-z]+[a-z0-9_.-]*[.][a-z]{2,3}$/i
         if (ptn.test(email)) {
             if (collabs.indexOf(email) == -1) {
                 var cidx = collabs.push(email);
@@ -51,7 +51,7 @@
                 $('#CollaboratorsHelp').removeClass('text-danger');
                 $('#CollaboratorsHelp').text('Email Added.');
                 var li = $('<li id="collab' + cidx + '">').addClass('list-group-item');
-                li.html("<p>" + email + "</p><a class='mr-0' href='#' id='collab" + cidx + "del'>&times;</a>");
+                li.html("" + email + "<a class='mr-0' href='#' id='collab" + cidx + "del'>&times;</a>");
                 $('#collaboratorsList').append(li);
                 $("#collab" + cidx + "del").click((event) => {
                     collabs = collabs.filter((val) => {
