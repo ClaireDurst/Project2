@@ -1,4 +1,4 @@
-<small class="text-muted">A project is basically a wrapper for a group of tasks... Let's fill out the details about your new project, and afterwards we can create sub-events that will fill it up.</small>
+<small class="text-muted">A project is basically a wrapper for a group of tasks... fill out the details for the project you'd like to keep track of, and afterwards we'll break it down into pieces that we can keep track of.</small>
 <div class="form-group">
     <label for="InputProjectName">Project name:</label>
     <input type="text" class="form-control" id="InputProjectName" aria-describedby="ProjectNameHelp" placeholder="Project Name">
@@ -21,12 +21,9 @@
 </div>
 <div class="form-group">
     <label form="InputCollaborators">Invite Collaborators:</label>
-    <input type="email" class="form-control" id="InputCollaboratorEmail" aria-describedby="CollaboratorsHelp" placeholder="Email Address">
-    <div class="list-group" id='collaboratorsList'></div>
-    <small id="CollaboratorsHelp" class="form-text text-muted">Invite friends and collegues to collaborate on this
-        Project.  This should only include users that have a role in this Project, and each collaborator will have the ability to assume
-        responsibilties for sub-tasks, create new sub-tasks, and update the status of sub-tasks that belong
-        to them.  Hit enter to add an email to the list.</small>
+    <div class='input-group'><input type="email" class="form-control" id="InputCollaboratorEmail" aria-describedby="CollaboratorsHelp" placeholder="Email Address"><span class='input-group-btn'><a class='btn btn-secondary' id='addColaborator'><i class="fa fa-user-plus" aria-hidden="true"></i></a></div>
+    <ul class="list-group" id='collaboratorsList'></div>
+    <small id="CollaboratorsHelp" class="form-text text-muted">This is the team you will be working with to complete this project.</small>
 </div>
 <div class="form-group">
     <label form="SelectPrivacyOptions">Privacy options:</label>
@@ -43,15 +40,45 @@
 
 </div>
 <script>
-    console.log('this is the modal dynamically loading/running its own code.');
-    // hah, pretty cool.
-    $('#button_SubmitModal').text('Create Project');
-    $('#button_SubmitModal').click((event) => {
-        alert('im da best maayne... i diiiid it.');
-    });
-    $('#ProjectDateHelp').click((event) => {
-        console.log($('#InputProjectDate').val());
-    });
+    var collabs = [];
+    function addColabEmail() {
+        var email = $("#InputCollaboratorEmail");
+        var ptn = /^[a-z]+[a-z0-9_.-]*[@][a-z]+[a-z0-9_.-]*[.][a-z]{3}$/i
+        if (ptn.test(email)) {
+            if (collabs.indexOf(email) == -1) {
+                $('#InputCollaboratorEmail').removeClass('invalid');
+                $('#CollaboratorsHelp').removeClass('text-danger');
+                $('#CollaboratorsHelp').text('Email Added.')
+                var li = $('<li id="' + email + '">');
+                li.append("<p>").text(email);
+                li.append("<a class='mr-0' href='#' id='" + email + "del'>&times;</a>");
+                $("#" + email + "del").click((event) => {
+                    collabs = collabs.filter((val) => {
+                        if (val !== email) {
+                            return val;
+                        }
+                    });
+                    $("#" + email).detach();
+                });
+                collabs.push(email);
+            } else {
+                $('#InputCollaboratorEmail').addClass('invalid');
+                $('#CollaboratorsHelp').addClass('text-danger');
+                $('#CollaboratorsHelp').text('Email Already Exists.')
+            }
+        } else {
+            $('#InputCollaboratorEmail').addClass('invalid');
+            $('#CollaboratorsHelp').addClass('text-danger');
+            $('#CollaboratorsHelp').text('Invalid Email.')
+        }
+    }
+    // set default values for the 2 date inputs... one today, the other next week
     $('#InputProjectDate').val('{{today}}');
     $('#InputProjectCompleteDate').val('{{next_week}}');
+    // set modal submit button's text
+    $('#button_SubmitModal').text('Create Project');
+    // submit button click
+    $('#button_SubmitModal').click((event) => {
+        console.log('Chachaaaaang!');
+    });
 </script>
