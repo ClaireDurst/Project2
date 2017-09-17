@@ -43,10 +43,12 @@
     var collabs = [];
     function addCollabEmail() {
         var email = $("#InputCollaboratorEmail").val();
+        $('#InputCollaboratorEmail').val('');
         var ptn = /^[a-z]+[a-z0-9_.-]*[@][a-z]+[a-z0-9_.-]*[.][a-z]{2,3}$/i
         if (ptn.test(email)) {
             if (collabs.indexOf(email) == -1) {
                 var cidx = collabs.push(email);
+
                 $('#InputCollaboratorEmail').removeClass('invalid');
                 $('#CollaboratorsHelp').removeClass('text-danger');
                 $('#CollaboratorsHelp').text('Email Added.');
