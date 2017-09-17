@@ -84,8 +84,10 @@
     $('#addCollaborator').click((event) => {
         addCollabEmail();
     });
-    $('#InputCollaboratorEmail').keypress(13, (event) => {
-        addCollabEmail();
+    $('#InputCollaboratorEmail').keypress((event) => {
+        if (event.which == 13) {
+            addCollabEmail();
+        }
     });
     // submit button click
     $('#button_SubmitModal').click((event) => {
