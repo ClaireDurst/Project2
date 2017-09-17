@@ -77,13 +77,19 @@
             $('#CollaboratorsHelp').text('Invalid Email.');
         }
     }
+    function validateForm(cb) {
+        var formObj = {
+            uid: UserData.user_id,
+            
+        }
+    }
     // set default values for the 2 date inputs... one today, the other next week
     $('#InputProjectDate').val('{{today}}');
     $('#InputProjectCompleteDate').val('{{next_week}}');
     // set modal submit button's text
     $('#button_SubmitModal').text('Create Project');
     // collab add btn click
-    $('#button_SubmitModal').removegit aClass('disabled');
+    $('#button_SubmitModal').removeClass('disabled');
     $('#addCollaborator').click((event) => {
         addCollabEmail();
     });
@@ -94,6 +100,6 @@
     });
     // submit button click
     $('#button_SubmitModal').click((event) => {
-        console.log('Chachaaaaang!');
+
     });
 </script>

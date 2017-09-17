@@ -118,6 +118,8 @@ User.hasMany(Project, {
     onDelete: "CASCADE"
 });
 
+
+
 var SubTask = sequelize.define('subtask', {
     id: {
         type: Sequelize.INTEGER,
@@ -152,6 +154,8 @@ var SubTask = sequelize.define('subtask', {
 Project.hasMany(SubTask, {
     onDelete: "CASCADE"
 });
+
+SubTask.belongsTo(Project);
 
 // force: true will drop the table if it already exists
 sequelize
