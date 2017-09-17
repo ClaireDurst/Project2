@@ -54,7 +54,7 @@ app.get("/view/calandarWeek/:weekof", (req, resp) => {
     if (! rx.test(weekOf)) {
         weekOf = moment().format('MM-DD-YYYY');
     }
-    resp.render('view_calandarWeek', {
+    resp.render('jt_calandarWeek', {
         layout: 'empty',
         helpers: {
             week_of: function() {
