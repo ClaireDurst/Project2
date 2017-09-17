@@ -1,5 +1,4 @@
-<h3>Create a Project:</h3>
-<small class="text-muted">A project is basically a wrapper for a group of tasks... </small>
+<small class="text-muted">A project is basically a wrapper for a group of tasks... Let's fill out the details about your new project, and afterwards we can create sub-events that will fill it up.</small>
 <div class="form-group">
     <label for="InputProjectName">Project name:</label>
     <input type="text" class="form-control" id="InputProjectName" aria-describedby="ProjectNameHelp" placeholder="Project Name">
@@ -45,7 +44,12 @@
 </div>
 <script>
     console.log('this is the modal dynamically loading/running its own code.');
+    // hah, pretty cool.
+    $('#button_SubmitModal').text('Create Project');
     $('#button_SubmitModal').click((event) => {
         alert('im da best maayne... i diiiid it.');
+    });
+    $('#ProjectDateHelp').click((event) => {
+        console.log($('#InputProjectDate').val());
     });
 </script>

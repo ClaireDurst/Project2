@@ -105,12 +105,7 @@ function init() {
         logOut();
     });
     $('#nav_newProject').click((event) => {
-        replaceModal('Create New Event', 'form/createProject');
-    });
-    $('#nav_manageProject').click((event) => {
-        replaceModal('MANAGE MODAL...', 'form/createProject', () => {
-            $("#form_modal").modal('show');
-        });
+        replaceModal('Create a New Project', 'form/createProject');
     });
     $('#dropdown01').addClass('disabled');
 }
