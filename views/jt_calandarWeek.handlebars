@@ -93,7 +93,7 @@
         return moment(weekOf, 'MM-DD-YYYY').add(qty, 'days').format('MM-DD-YYYY');
     }
 
-    for (var i = 1; i < 7; i++) {
+    for (var i = 0; i < 7; i++) {
         var cardDate = addDay(i);
         $('#card' + (i + 1) + ' .card-header').text(cardDate);
     }
