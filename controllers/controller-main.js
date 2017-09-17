@@ -48,6 +48,15 @@ app.post("/createUser", (req, resp) => {
     }
 });
 
+app.post("/create/Project", (req, resp) => {
+    if (req.body.uid && req.body.pname && req.body.ppriv && req.body.pstart) {
+        ORM.createProject(req.body.uid, req.body.pname, req.body.pstart, req.body.pgoal, req.body.collabs, req.body.privacy, (data) => {
+            var x = JSON.stringify(data);
+            resp.send(x);
+        });
+    }
+});
+
 app.get("/view/calandarWeek/:weekof", (req, resp) => {
     var weekOf = req.params.weekOf;
     var rx = /[0-9]{2}[-][0-9]{2}[-][0-9]{4}/;

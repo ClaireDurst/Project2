@@ -79,6 +79,13 @@ var ORM = {
         }).catch((err) => {
             throw new Error(err);
         });
+    },
+    createProject: function(owner_id, name, desc, start, goal, collabs, privacy, cb) {
+        cxs.Project.create({ user_id: owner_id, project_name: name, project_start_date: start, project_goal_date: goal, project_collaborators: collabs, project_privacy: privacy, project_status: "pending"}).then((data) => {
+            return cb(data);
+        }).catch((err) => {
+            throw new Error(err);
+        });
     }
 };
 
