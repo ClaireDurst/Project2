@@ -157,7 +157,7 @@ function loginStatus(status) {
                 } else {
                     // Create new user in DB
                     console.log('Posting user details to be written to users table in DB.');
-                    $.post('/createUser', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email, user_picture: UserData.user_picture }, (data) => {
+                    $.post('/createUser', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email, picture: UserData.user_picture }, (data) => {
                         // User created, writing info to UserData object and completing login sequence
                         var x = JSON.parse(data);
                         UserData.isNew = true;

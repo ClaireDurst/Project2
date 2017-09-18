@@ -30,7 +30,7 @@ app.post("/login", (req, resp) => {
     console.log("POST '/login' => " + JSON.stringify(req.body));
     // check for existing user, create one if necessary... respond with the returned data.
     if (req.body.email) {
-        ORM.checkUser(req.body.email, (data) => {
+        ORM.userFromEmail(req.body.email, (data) => {
             resp.send(data);
         });
     } else {
@@ -41,7 +41,7 @@ app.post("/login", (req, resp) => {
 
 app.post("/createUser", (req, resp) => {
     if (req.body.email && req.body.firstName && req.body.lastName) {
-        ORM.createUser(req.body.firstName, req.body.lastName, req.body.email, (data) => {
+        ORM.createUser(req.body.firstName, req.body.lastName, req.body.email, req.body.picture, (data) => {
             var x = JSON.stringify(data);
             resp.send(x);
         });
