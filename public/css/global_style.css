@@ -9,6 +9,13 @@
      box-sizing: border-box;
  }
 
+#loading-icon {
+    display: block;
+    positon: absolute;
+    margin: 0px, auto;
+    top: 225px;
+}
+
 #calandar-weekly-row {
     max-height: 450px;
     overflow: hidden;

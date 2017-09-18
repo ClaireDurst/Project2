@@ -39,6 +39,7 @@ var UserData = {
 // functions
 
 function logIn() {
+    $('#loading-icon').fadeIn();
     // prompt user for fb login, then update login status (localhost testing skips FB completly, pinging the DB server as "testy mctesterson testies@yayaya.com")
     FB.login(function (resp) {
         console.log(resp.status);
@@ -47,20 +48,26 @@ function logIn() {
 }
 
 function replaceJumbotron(endpoint) {
+    $('#loading-icon').fadeIn();
     $.get(endpoint, (html) => {
+        $('#loading-icon').fadeOut();
         $('#jt_container').html(html);
     });
 }
 
 function replaceContent(endpoint) {
+    $('#loading-icon').fadeIn();
     $.get(endpoint, (html) => {
+        $('#loading-icon').fadeOut();
         $("#content_container").html(html);
     });
 }
 
 function replaceModal(label, endpoint, cb = function() {
+    $("loading-icon").fadeOut();
     $('#form_modal').modal('show');
 }) {
+    $("loading-icon").fadeIn();
     $('#modal_label').text(label);
     $.get(endpoint, (html) => {
         $('#modal_body').html(html);
@@ -108,6 +115,7 @@ function loggedIn() {
     $('#dropdown01').removeClass('disabled');
     $('#dropdown02').removeClass('disabled');
     replaceJumbotron('jt/loggedIn');
+    $('#loading-icon').fadeOut();
 }
 function loggedOut() {
     // switch the log out button for a log in button
@@ -128,6 +136,7 @@ function loggedOut() {
     UserData.user_email = undefined;
     UserData.user_isNew = undefined;
     UserData.user_picture = undefined;
+    $('#loading-icon').fadeOut();
 }
 function loginStatus(status) {
     // the function called when FB.login completes;  Runs an API call to FB to
