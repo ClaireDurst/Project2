@@ -10,10 +10,11 @@
  }
 
 #loading-icon {
-    display: block;
-    positon: absolute;
+    display: inline;
+    position: fixed;
     margin: 0px, auto;
     top: 225px;
+    left:50%;
 }
 
 #calandar-weekly-row {
