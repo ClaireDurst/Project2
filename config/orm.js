@@ -5,7 +5,7 @@
  *-------------------------------------->8------------------------------------*/
 
  // cxs.User (`Users` = id, user_firstName!, user_lastName!, user_email!)
- // cxs.dbEvent (`dbEvents` = event_id,
+ // cxs.SeqEvent (.SeqEvents` = event_id,
 
  var path = require('path')
    , cxs = require('./sequelize.js');
@@ -20,23 +20,15 @@ var ORM = {
                 throw new Error(err);
             });
     },
-    userFromEmail: function (email, cb) {
-        // retrieve user info associated with an email
-        cxs.User.findOne({where: { user_email: email }}).then(function(data) {
-            return cb(data);
-        }).catch(function(err) {
-            throw new Error(err);
-        });
-    },
-    userFromID: function(user_id, cb) {
+    userFromID: function(uuid, cb) {
         // retrieve user info associated with an ID
-        cxs.User.findOne({ where: { id: user_id } }).then(function(data) {
+        cxs.User.findById(uuid).then(function(data) {
             return cb(data);
         }).catch(function(err) {
             throw new Error(err);
         });
     },
-    checkUser: function (email, cb) {
+    userFromEmail: function(email, cb) {
         // if user exists return info, otherwise create one and return its info
         cxs.User.findOne({ where: { user_email: email }}).then((data) => {
             if (data != null) {
@@ -49,8 +41,8 @@ var ORM = {
             throw new Error(err);
         });
     },
-    createUser: function (first_name, last_name, email, cb) {
-        cxs.User.create({ user_firstName: first_name, user_lastName: last_name, user_email: email }).then((data) => {
+    createUser: function(first_name, last_name, email, picture, cb) {
+        cxs.User.create({ user_firstName: first_name, user_lastName: last_name, user_email: email, user_picture: picture }).then((data) => {
             return cb(data);
         }).catch((err) => {
             throw new Error(err);
@@ -58,7 +50,7 @@ var ORM = {
     },
     getUserEvents: function(owner_id, cb) {
         // return all events owned by a user ID
-        cxs.dbEvent.findAll({ where: { user_id: owner_id } })
+        cxs.SeqEvent.findAll({ where: { user_uuid: owner_id } })
             .then((data) => {
                 return cb(data);
             }).catch((err) =>{
@@ -66,7 +58,7 @@ var ORM = {
             });
     },
     getEventsByDeadline: function(owner_id, deadline) {
-        cxs.dbEvent.findAll({ where: { user_id: owner_id, event_deadline: deadline }}).then((data) => {
+        cxs.SeqEvent.findAll({ where: { user_uuid: owner_id, event_deadline: deadline }}).then((data) => {
             return cb(data);
         }).catch((err) => {
             throw new Error(err);
@@ -74,14 +66,14 @@ var ORM = {
     },
     createEvent: function(owner_id, name, deadline, description, cb) {
         // create a new event, return the row
-        cxs.dbEvent.create({ event_name: name, event_deadline: deadline, user_id: owner_id, event_is_complete: 0 }).then((data) => {
+        cxs.SeqEvent.create({ event_name: name, event_deadline: deadline, user_uuid: owner_id, event_is_complete: 0 }).then((data) => {
             return cb(data);
         }).catch((err) => {
             throw new Error(err);
         });
     },
     createProject: function(owner_id, name, desc, start, goal, collabs, privacy, cb) {
-        cxs.Project.create({ user_id: owner_id, project_name: name, project_start_date: start, project_goal_date: goal, project_collaborators: collabs, project_privacy: privacy, project_status: "pending"}).then((data) => {
+        cxs.Project.create({ user_uuid: owner_id, project_name: name, project_start_date: start, project_goal_date: goal, project_collaborators: collabs, project_privacy: privacy, project_status: "pending"}).then((data) => {
             return cb(data);
         }).catch((err) => {
             throw new Error(err);

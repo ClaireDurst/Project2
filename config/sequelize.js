@@ -17,10 +17,11 @@ const sequelize = new Sequelize('hr0vdec8yom4q8ik', 'givj98e77xcypqaw', 'pba0j70
 
 
 var User = sequelize.define('user', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+    uuid: {
+    // WAS uid: INT , autoInc+priKEy
+        type: Sequelize.UUID,
+        primaryKey: true,
+        defaultValue: Sequelize.UUIDV1
     },
     user_firstName: {
         type: Sequelize.STRING,
@@ -31,49 +32,18 @@ var User = sequelize.define('user', {
         allowNull:false
     },
     user_email: {
+        // Facebook will return a phone number if user substituted theirs for an email
         type: Sequelize.STRING,
-        allowNull: false,
-        validator: {
-            isEmail: true
-        }
+        allowNull: false
+    },
+    user_picture: {
+        // faceabook thumb url
+        type: Sequelize.STRING,
+        allowNull: true
     }
 });
 
 
-
-// var dbEvent = sequelize.define('event', {
-//     event_id: {
-//         type: Sequelize.INTEGER,
-//         autoIncrement: true,
-//         primaryKey: true
-//     },
-//     event_name: {
-//         type: Sequelize.STRING,
-//         allowNull:false,
-//         validator: {
-//             is: ["[a-z_", 'i']
-//         }
-//     },
-//     event_description: {
-//         type: Sequelize.TEXT,
-//         allowNull: true
-//     },
-//     event_collaborators: {
-//         type: Sequelize.JSON,
-//         allowNull: true,
-//         defaultValue: null
-//     },
-//     event_goal: {
-//         type: Sequelize.DATEONLY,
-//         allowNull: true,
-//         defaultValue: null
-//     },
-//     event_is_complete: {
-//         type: Sequelize.BOOLEAN,
-//         allowNull: false,
-//         defaultValue: 0
-//     }
-// });
 
 var Project = sequelize.define('project', {
     id: {
@@ -86,6 +56,10 @@ var Project = sequelize.define('project', {
         allowNull: false
     },
     project_description: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    project_notes: {
         type: Sequelize.TEXT,
         allowNull: true
     },
@@ -114,11 +88,8 @@ var Project = sequelize.define('project', {
     }
 });
 
-User.hasMany(Project, {
-    onDelete: "CASCADE"
-});
-
-
+User.hasMany(Project);
+Project.belongsTo(User);
 
 var SubTask = sequelize.define('subtask', {
     id: {
@@ -144,6 +115,10 @@ var SubTask = sequelize.define('subtask', {
         allowNull: false,
         defaultValue: 'pending'
     },
+    subtask_notes: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
     subtask_goal_date: {
         type: Sequelize.DATE,
         allowNull: true,
@@ -151,11 +126,113 @@ var SubTask = sequelize.define('subtask', {
     }
 });
 
+
 Project.hasMany(SubTask, {
     onDelete: "CASCADE"
 });
-
 SubTask.belongsTo(Project);
+
+/*
+var Calandar_Day = sequelize.define('calandar_day', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    day_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
+    },
+    day_notes: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    day_reminders: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    attributes: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    }
+});
+
+User.hasMany(Calandar_Day, {
+    onDelete: "CASCADE"
+});
+Calandar_Day.belongsTo(User);
+*/
+var Day = sequelize.define('day', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    day_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
+    },
+    day_notes: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    day_reminders: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    day_attributes: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    }
+});
+
+User.hasMany(Day, {
+    onDelete: "CASCADE"
+});
+Day.belongsTo(User);
+
+var SeqEvent = sequelize.define('event', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    event_title: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    event_description: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    event_notes: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    event_time: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    event_duration: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: "60"
+    },
+    event_privacy: {
+        type: Sequelize.ENUM('private', 'hidden', 'public'),
+        defaultValue: "public"
+    },
+    event_attributes: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    }
+    // ATTR: priority, shared_with, display_color, reminders, etc...
+});
+
+User.hasMany(SeqEvent);
+SeqEvent.belongsTo(User);
 
 // force: true will drop the table if it already exists
 sequelize
@@ -165,7 +242,11 @@ sequelize
         User.sync({ force: false }).then(() => {
             Project.sync({ force: false }).then(() => {
                 SubTask.sync({ force: false }).then(() => {
-                    console.log('Sequelize is all sync\'d up!');
+                    Day.sync({ force: false }).then(() => {
+                        SeqEvent.sync({ force: false }).then(() => {
+                            console.log('Sequelize is all sync\'d up!');
+                        });
+                    });
                 });
             });
         });
@@ -174,5 +255,7 @@ sequelize
 module.exports = {
     "User": User,
     "Project": Project,
-    "SubTask": SubTask
+    "SubTask": SubTask,
+    "Day": Day,
+    "SeqEvent": SeqEvent
 };

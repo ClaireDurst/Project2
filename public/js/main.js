@@ -27,7 +27,7 @@ console.log('=====================================(main)========================
 var UserData = {
     isLoggedIn: false,
     fb_state: undefined,
-    user_id: undefined,
+    uuid: undefined,
     user_firstName: undefined,
     user_lastName: undefined,
     user_fullName: undefined,
@@ -74,6 +74,7 @@ function logOut() {
     loggedOut();
 }
 function init() {
+    // TODO: Init to logged in state, as opposed to logged out.
     $('#nav_logOut').hide();
     $('#nav_logIn').click((event) => {
         FB.login((resp) => {
@@ -120,12 +121,13 @@ function loggedOut() {
     // reset UserData
     UserData.isLoggedIn = false;
     UserData.fb_state = null;
-    UserData.user_id = undefined;
+    UserData.uuid = undefined;
     UserData.user_firstName = undefined;
     UserData.user_lastName = undefined;
     UserData.user_fullName = undefined;
     UserData.user_email = undefined;
     UserData.user_isNew = undefined;
+    UserData.user_picture = undefined;
 }
 function loginStatus(status) {
     // the function called when FB.login completes;  Runs an API call to FB to
@@ -150,16 +152,16 @@ function loginStatus(status) {
                     // User exists, saving id to UserData object and completing login sequence
                     var x = JSON.parse(data);
                     UserData.isNew = false;
-                    UserData.user_id = x.id;
+                    UserData.uuid = x.uuid;
                     loggedIn();
                 } else {
                     // Create new user in DB
                     console.log('Posting user details to be written to users table in DB.');
-                    $.post('/createUser', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email }, (data) => {
+                    $.post('/createUser', { firstName: UserData.user_firstName, lastName: UserData.user_lastName, "email": UserData.user_email, user_picture: UserData.user_picture }, (data) => {
                         // User created, writing info to UserData object and completing login sequence
                         var x = JSON.parse(data);
                         UserData.isNew = true;
-                        UserData.user_id = x.id;
+                        UserData.uuid = x.uuid;
                         loggedIn();
                     });
                 }

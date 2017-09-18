@@ -94,6 +94,41 @@ app.get('/jt/:jtName', (req, resp) => {
     });
 });
 
+app.get('/user/events/byEmail/:email', (req, resp) => {
+    var email = req.params.email;
+    var target_uid = undefined;
+    var patnEmail = /^[a-z]+[a-z0-9.+_-]*[@][a-z]+[a-z0-9+._-]*[.][a-z]+$/i; // must start with any letter, and be a mix of letters, numbers, dashes, dots, and underlines, followed by an @, and the same rules again, plus a . anything
+    if (patnEmail.test(email)) {
+        // valid email, get associated UID
+        ORM.userFromEmail(email, (userdata) => {
+            // Use UID to get associated events
+            target_uid = userdata.id;
+            ORM.userEvents(target_uid, (events) => {
+                resp.send(JSON.stringify(events));
+            });
+        });
+    } else {
+        // Send error code 400 to halt server side execution
+        console.log("GET => /user/events/byEmail/<email>... Passed Email didn't match the patn");
+        resp.sendStatus(400); // "400 - Invalid Request"
+    }
+});
+
+app.get('/user/events/byUID/:uid', (req, resp) => {
+    var target_uid = req.params.uid;
+    var patnUID = /^[1-9][0-9]*$/;      // must start with a 1 or more (no zeros to begin with), and must be and integer
+    if (patnUID.test(target_uid)) {
+        // UID not blatantly invalid... pull any events associated with it
+        ORM.userEvents(target_uid, (events) => {
+            resp.send(JSON.stringify(events));
+        });
+    } else {
+        // UID doesn't match the pattern, push error code 400
+        console.log("GET => /user/events/byUID/<uid>... Passed ID didn't match the patn");
+        resp.sendStatus(400); // "400 - Invalid Request"
+    }
+})
+
 app.use((req, res) => {
     res.render('index', {
         helpers: {

@@ -44,8 +44,9 @@
     function addCollabEmail() {
         var email = $("#InputCollaboratorEmail").val();
         $('#InputCollaboratorEmail').val('');
-        var ptn = /^[a-z]+[a-z0-9_.-]*[@][a-z]+[a-z0-9_.-]*[.][a-z]{2,3}$/i
-        if (ptn.test(email)) {
+        var patnEmail = /^[a-z]+[a-z0-9.+_-]*[@][a-z]+[a-z0-9+._-]*[.][a-z]+$/i; // must start with any letter, and be a mix of letters, numbers, dashes, dots, and underlines, followed by an @, and the same rules again, plus a . anything
+
+        if (patnEmail.test(email)) {
             if (collabs.indexOf(email) == -1) {
                 var cidx = collabs.push(email);
 
@@ -80,7 +81,7 @@
     function validateForm(cb) {
         var formObj = {
             uid: UserData.user_id,
-            
+
         }
     }
     // set default values for the 2 date inputs... one today, the other next week

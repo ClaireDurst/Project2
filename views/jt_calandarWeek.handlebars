@@ -1,5 +1,5 @@
 
-<div class='container-fluid'>
+<div class='container-fluuid'>
     <div class='row' id='calandar-weekly-row'>
         <div class='calandar-weekly-day card' id='card1'>
             <div class='card-header text-white bg-info text-center'>(day)</div>
@@ -12,6 +12,7 @@
                 <small class='text-muted'>(task summary)</small>
             </div>
         </div>
+        <!--
         <div class='calandar-weekly-day card' id='card2'>
             <div class='card-header text-white bg-info text-center'>(day)</div>
             <ul class='list-group list-group-flush'>
@@ -77,15 +78,51 @@
                 <p>Task:</p>
                 <small class='text-muted'>(task summary)</small>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
+
 <script>
     var weekOf = '{{week_of}}';
     function addDay(qty) {
         return moment(weekOf, 'MM-DD-YYYY').add(qty, 'days').format('MM-DD-YYYY');
     }
-
+    function retrieveDay(date, cb) {
+        // TODO: validate input params
+        $.get('/retr/byDate/' + date, (data) => {
+            return cb(data);
+        });
+    }
+    function retrieveEvents(uuid, email, start, end, cb) {
+        var endpoint = undefined;
+        var patnuUID = /^[1-9][0-9]*$/;      // must start with a 1 or more (no zeros to begin with), and must be and integer
+        var patnEmail = /^[a-z]+[a-z0-9.+_-]*[@][a-z]+[a-z0-9+._-]*[.][a-z]+$/i; // must start with any letter, and be a mix of letters, numbers, dashes, dots, and underlines, followed by an @, and the same rules again, plus a . anything
+        if (email) {
+            if (patnEmail.test(email)) {
+                // request using email address
+                endpoint = "/user/events/byEmail/" + email;
+            } else {
+                console.log('Email address was invalid...');
+            }
+        }
+        if (uuid) {
+            // uUID overwrites email if both were passed and valid
+            if (patnuUID.test(uuid)) {
+                // request using UUID
+                endpoint = "/user/events/byUUID/" + uuid;
+            } else {
+                console.log('Invalid User ID');
+            }
+        }
+        if (endpoint !== undefined) {
+            // proceeed with the request
+            $.get(endpoint, (data) => {
+                return cb(data);
+            });
+        } else {
+            throw new Error('No valid arguments passed.');
+        }
+    }
     for (var i = 0; i < 7; i++) {
         var cardDate = addDay(i);
         $('#card' + (i + 1) + ' .card-header').text(cardDate);
